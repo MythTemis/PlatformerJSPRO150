@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='style.css' rel='stylesheet'/>
+    <title>Document</title>
+    
+</head>
+<body onload="startGame()">  
+    <canvas id="myfirstCanvas" width="1500" height="700" style="border:4px solid #000000;">
+</canvas>  
+
+<script>  
+  
+    function startGame() {  
+        myGameArea.start();  
+    }  
+      
+    var  myGameArea = {  
+        canvas : document.createElement("canvas"),  
+        start : function() {  
+            this.canvas.width = 480;  
+            this.canvas.height = 270;  
+            thisthis.context = this.canvas.getContext("2d");  
+            document.body.insertBefore(this.canvas, document.body.childNodes[0]);  
+        }  
+    }  
+      
+    </script>
+
+</body>
+</html>
