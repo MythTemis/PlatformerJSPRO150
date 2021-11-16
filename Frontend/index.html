@@ -4,31 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='style.css' rel='stylesheet'/>
-    <title>Document</title>
+    <title>Platform Game</title>
     
 </head>
-<body onload="startGame()">  
-    <canvas id="myfirstCanvas" width="1500" height="700" style="border:4px solid #000000;">
-</canvas>  
+<body>
+    <!-- Canvas -->
+    <canvas id="game"></canvas> 
+    <!-- width="1500" height="700" style="border:4px solid #000000;" -->  
 
-<script>  
-  
-    function startGame() {  
-        myGameArea.start();  
-    }  
-      
-    var  myGameArea = {  
-        canvas : document.createElement("canvas"),  
-        start : function() {  
-            this.canvas.width = 480;  
-            this.canvas.height = 270;  
-            thisthis.context = this.canvas.getContext("2d");  
-            document.body.insertBefore(this.canvas, document.body.childNodes[0]);  
-        }  
-    }  
-      
+    <!-- CreateJS -->
+	<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
+    <!-- Fonts -->
+
+
+    <!-- Game files -->
+
+    <script src="leave/app.js"></script>
+    <script src="leave/utils.js"></script>
+    <script src="leave/ui/screen.js"></script>
+    <script src="leave/ui/ui.js"></script>
+    <script src="leave/ui/endscreen.js"></script>
+    <script src="leave/ui/gamescreen.js"></script>
+    <script src="leave/ui/helpscreen.js"></script>
+    <script src="leave/ui/mainmenu.js"></script>
+    
+    
+    
+    <script>
+        app.init();
     </script>
-
 </body>
 </html>
