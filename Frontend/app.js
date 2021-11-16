@@ -21,10 +21,6 @@ var app = {
     // Game Settings
     FPS: 30,
     currentLevel: 1,
-    enemiesSpawnedThisLevel: 0,
-    enemiesKilledThisLevel: 0,
-    enemiesKilledThisGame: 0,
-    
     player: null,
 
 
@@ -38,23 +34,6 @@ var app = {
     KEYCODE_A : { code: 65, isPressed: false},
     KEYCODE_S : { code: 83, isPressed: false},
     KEYCODE_D : { code: 68, isPressed: false},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Setup the canvas
