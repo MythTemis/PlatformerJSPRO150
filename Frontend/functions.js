@@ -83,7 +83,7 @@ document.addEventListener('keyup', (evt) => {
 
 const moveUp = (isPressed) => {
     if(isPressed) {
-        dy = 7;
+        dy = 5;
     }else{
         dy = 0;
     };
@@ -91,7 +91,7 @@ const moveUp = (isPressed) => {
 
 const moveDown = (isPressed) => {
     if(isPressed) {
-        dy = -7;
+        dy = -5;
     }else{
         dy = 0;
     };
@@ -99,7 +99,7 @@ const moveDown = (isPressed) => {
 
 const moveLeft = (isPressed) => {
     if(isPressed) {
-        dx = -7;
+        dx = -5;
     }else{
         dx = 0;
     };
@@ -107,7 +107,7 @@ const moveLeft = (isPressed) => {
 
 const moveRight = (isPressed) => {
     if(isPressed) {
-        dx = 7;
+        dx = 5;
     }else{
         dx = 0;
     };
