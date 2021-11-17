@@ -59,36 +59,58 @@ var app = {
         this.screen = new createjs.Container();
         this.screen.setBounds(0, 0, this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
         this.stage.addChild(this.screen);
+        setInterval(this.draw(), 10);
+
+        
+        // this.ctx.beginPath();
+        // this.ctx.rect(45, 40, 504, 50);
+        // this.ctx.fillStyle = "#FF0000";
+        // this.ctx.fill();
+        // this.ctx.closePath();
 
         // Enable and track mouse input
-        this.stage.enableMouseOver();
+        // this.stage.enableMouseOver();
         
-        this.stage.on("stagemousemove", function(evt) {
-            app.mousePos.x = Math.floor(evt.stageX);
-            app.mousePos.y = Math.floor(evt.stageY);
-            //console.log("Mouse: ( " + app.mouseX + ", " + app.mouseY + " )");
-        });
-        this.stage.on("stagemousedown", function (evt) {
-            app.handleMouseDown(evt);
-        });
-		this.stage.on("stagemouseup", function (evt) {
-            app.handleMouseUp(evt);
-        });
+        // this.stage.on("stagemousemove", function(evt) {
+        //     app.mousePos.x = Math.floor(evt.stageX);
+        //     app.mousePos.y = Math.floor(evt.stageY);
+        //     //console.log("Mouse: ( " + app.mouseX + ", " + app.mouseY + " )");
+        // });
+        // this.stage.on("stagemousedown", function (evt) {
+        //     app.handleMouseDown(evt);
+        // });
+		// this.stage.on("stagemouseup", function (evt) {
+        //     app.handleMouseUp(evt);
+        // });
 
-        // Set up our basic keyboard inputs 
-        document.onkeydown = this.handleKeyDown;
-        document.onkeyup = this.handleKeyUp;
+        // // Set up our basic keyboard inputs 
+        // document.onkeydown = this.handleKeyDown;
+        // document.onkeyup = this.handleKeyUp;
 
         
-        // Set up our game loop
-        createjs.Ticker.addEventListener("tick", this.update);
-        createjs.Ticker.framerate = this.FPS;
+        // // Set up our game loop
+        // createjs.Ticker.addEventListener("tick", this.update);
+        // createjs.Ticker.framerate = this.FPS;
 
-        // Create the first screen
-        this.gotoScreen("menus");
-
-
+        // // Create the first screen
+        // this.gotoScreen("menus");
     },
+
+    draw: function() {
+        this.ctx.beginPath();
+        this.ctx.arc(50, 50, 10, 0, Math.PI*2);
+        this.ctx.fillStyle = "#0095DD";
+        this.ctx.fill();
+        this.ctx.closePath();
+    },
+
+    handleKeyDown: function() {
+        
+    },
+
+    handleKeyUp: function() {
+        
+    }
 
 
 
