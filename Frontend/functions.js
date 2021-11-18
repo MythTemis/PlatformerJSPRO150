@@ -58,8 +58,6 @@ const drawEnemyUpdate = () => {
 
 //Key down event listener
 document.addEventListener('keydown',  (evt) => {
-
-    
     if(!evt) {
         var evt = window.event;
     }
@@ -144,8 +142,12 @@ const moveRight = (isPressed) => {
     };
 };
 
-drawCharacter();
-drawEnemy();
-setInterval(drawUpdate, 10);
-setInterval(drawEnemyUpdate, 100);
+//starts everything
+const init = () => {
+    drawCharacter();
+    drawEnemy();
+    setInterval(drawUpdate, 10);
+    setInterval(drawEnemyUpdate, 100);
+}
+init();
 
