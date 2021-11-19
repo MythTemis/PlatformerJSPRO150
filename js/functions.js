@@ -1,21 +1,4 @@
-var canvas = document.getElementById("game");
-canvas.width = 720;
-canvas.height = 720;
-const minX = 0, maxX = 700;
-const minY = 0, maxY = 700;
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var enemyX = Math.random() * (maxX - minX) + minX;
-var enemyY = Math.random() * (maxY - minY) + minY;
-var dx = 0;
-var dy = 0;
-const charDimension = [10, 10, 10, 20]
-
-
-
-//Drawing the square
-const drawCharacter = () => {
+onst drawCharacter = () => {
     ctx.beginPath();
     ctx.fillStyle = "#0095DD";
     ctx.fillRect(x, y, 30, 40);
@@ -27,14 +10,6 @@ const drawEnemy = () => {
     ctx.fillStyle = "#000000";
     ctx.fillRect(enemyX, enemyY, 30, 40);
     ctx.closePath();
-}
-
-const drawUpdate = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawCharacter();
-    drawEnemy();
-    x += dx;
-    y -= dy;
 }
 
 const drawEnemyUpdate = () => {
@@ -112,7 +87,7 @@ document.addEventListener('keyup', (evt) => {
 
 const moveUp = (isPressed) => {
     if(isPressed && y < maxY) {
-        dy = 5;
+        dy = 1;
     }else{
         dy = 0;
     };
@@ -120,7 +95,7 @@ const moveUp = (isPressed) => {
 
 const moveDown = (isPressed) => {
     if(isPressed && y > minY) {
-        dy = -5;
+        dy = -1;
     }else{
         dy = 0;
     };
@@ -128,7 +103,7 @@ const moveDown = (isPressed) => {
 
 const moveLeft = (isPressed) => {
     if(isPressed && x > minX) {
-        dx = -5;
+        dx = 1;
     }else{
         dx = 0;
     };
@@ -136,7 +111,7 @@ const moveLeft = (isPressed) => {
 
 const moveRight = (isPressed) => {
     if(isPressed && x < maxX) {
-        dx = 5;
+        dx = -1;
     }else{
         dx = 0;
     };
@@ -144,10 +119,10 @@ const moveRight = (isPressed) => {
 
 //starts everything
 const init = () => {
+    level = new level ()
     drawCharacter();
     drawEnemy();
     setInterval(drawUpdate, 10);
     setInterval(drawEnemyUpdate, 100);
 }
 init();
-
