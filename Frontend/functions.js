@@ -1,4 +1,4 @@
-onst drawCharacter = () => {
+const drawCharacter = () => {
     ctx.beginPath();
     ctx.fillStyle = "#0095DD";
     ctx.fillRect(x, y, 30, 40);
