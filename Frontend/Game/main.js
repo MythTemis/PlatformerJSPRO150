@@ -40,12 +40,21 @@ window.addEventListener("load", function(event) {
     display.buffer.canvas.height = game.world.height;
     display.buffer.canvas.width = game.world.width;
 
+    display.tile_sheet.image.addEventListener('load', function(evt) {
+        resize();
+        engine.start();
+    }, {once:true});
+
+    display.tile_sheet.image.src = "tilesheet.png";
+
     window.addEventListener("keydown", keyDownUp);
     window.addEventListener("keyup",   keyDownUp);
     window.addEventListener("resize",  resize);
 
-    resize();
+   
 
-    engine.start();
+    
+
+    
 
 });
