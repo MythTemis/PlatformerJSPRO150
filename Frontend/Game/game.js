@@ -8,6 +8,7 @@ const Game = function() {
     gravity:3,
 
     player:new Game.Player(),
+    //enemy: new enemy(80,80),
 
     height:72,
     width:128,

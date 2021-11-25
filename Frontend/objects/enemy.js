@@ -4,11 +4,10 @@ class enemy {
         this.start_health = 2;
         this.color      = "#000000";
         this.height     = 5;
-        this.jumping    = true;
         this.velocity_x = 0;
         this.velocity_y = 0;
         this.width      = 5;
-        this.x          = 100;
+        this.x          = 80;
         this.y          = 50;
         
         this._container = new createjs.Container();
