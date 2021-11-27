@@ -4,7 +4,9 @@ const Display = function(canvas) {
   this.context = canvas.getContext("2d");
 
   this.tile_sheet = new Display.TileSheet(48, 5);
+  
 
+  //This draws the given map
   this.drawMap = function(map, columns) {
 
     for (let index = map.length - 1; index > -1; -- index) {
@@ -24,9 +26,9 @@ const Display = function(canvas) {
   this.drawPlayer = function(rectangle, color1, color2) {
 
     this.buffer.fillStyle = color1;
-    this.buffer.fillRect(Math.floor(rectangle.x), Math.floor(rectangle.y), rectangle.width, rectangle.height);
+    this.buffer.fillRect(Math.round(rectangle.x), Math.round(rectangle.y), rectangle.width, rectangle.height);
     this.buffer.fillStyle = color2;
-    this.buffer.fillRect(Math.floor(rectangle.x + 2), Math.floor(rectangle.y + 2), rectangle.width - 4, rectangle.height - 4);
+    this.buffer.fillRect(Math.round(rectangle.x + 2), Math.round(rectangle.y + 2), rectangle.width - 4, rectangle.height - 4);
 
   };
 
