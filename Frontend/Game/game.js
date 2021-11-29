@@ -114,14 +114,14 @@ Game.Player.prototype = {
       enemy.health -=1;
       return enemy;
     }
-    else if (this.left > enemy.right && this.left < enemy.left) {
+    else if (this.left >= enemy.right && this.left < enemy.left) {
       this.health -= 1;
-      this.x = this.x + 5;
+      this.x = enemy.right + 2;
       this.velocity_x = 0;
     }
-    else if (this.right < enemy.left && this.right > enemy.right) {
+    else if (this.right <= enemy.left && this.right > enemy.right) {
       this.health -= 1;
-      this.x -= 5;
+      this.x = enemy.left - 7;
       this.velocity_x = 0;
     }
   },
