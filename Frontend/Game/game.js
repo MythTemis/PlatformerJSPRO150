@@ -141,12 +141,12 @@ Game.Enemy.prototype = {
 
   move:function() {
       let minimum = 0, maximum = 1;
-      let num = Math.floor(Math.random() * (maximum - minimum)) + 1
+      let num = Math.round(Math.random() * (maximum - minimum))
 
       if(num == 0){
-          this.moveLeft;
+        this.moveLeft;
       }else{
-          this.moveRight;
+        this.moveRight;
       }
   },
 
