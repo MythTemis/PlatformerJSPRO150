@@ -4,7 +4,10 @@ const Display = function(canvas) {
   this.context = canvas.getContext("2d");
 
   this.displayHealth = function(health){
-    
+    this.context.font = "30px Comic Sans MS";
+    this.context.fillStyle = "white";
+    this.context.textAlign = 'center';
+    this.context.fillText(health + "/3");
   }
 
   this.drawRectangle = function(x, y, width, height, color) {
