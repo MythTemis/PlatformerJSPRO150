@@ -124,7 +124,7 @@ Game.Player.prototype = {
       this.x = enemy.left - 7;
       this.velocity_x = 0;
     }
-    
+
   },
 
   update:function() {
@@ -141,7 +141,7 @@ Game.Enemy.prototype = {
 
   move:function() {
       let minimum = 0, maximum = 1;
-      let num = Math.floor(Math.random() * (maximum - minimum)) + minimum
+      let num = Math.floor(Math.random() * (maximum - minimum)) + 1
 
       if(num == 0){
           this.moveLeft;
