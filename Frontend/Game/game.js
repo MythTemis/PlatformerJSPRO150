@@ -24,11 +24,16 @@ const Game = function() {
 
     update:function() {
 
+      enemy = this.player.enemyCollision(this.enemy);
+
       this.player.velocity_y += this.gravity;
       this.player.update();
 
       this.player.velocity_x *= this.friction;
       this.player.velocity_y *= this.friction;
+
+      this.enemy.move();
+      this.enemy.update();
 
       this.collideObject(this.player);
 
@@ -104,15 +109,20 @@ Game.Player.prototype = {
   moveLeft:function()  { this.velocity_x -= 0.5; },
   moveRight:function() { this.velocity_x += 0.5; },
 
-  testCollision:function(enemy) {
+  enemyCollision:function(enemy) {
     if (this.bottom == enemy.top) {
       enemy.health -=1;
       return enemy;
     }
-    else if (this.left > enemy.right || this.right < enemy.left) {
+    else if (this.left > enemy.right && this.left < enemy.left) {
       this.health -= 1;
-      this.x -= 11;
-      this.y = 67;
+      this.x = this.x + 5;
+      this.velocity_x = 0;
+    }
+    else if (this.right < enemy.left && this.right > enemy.right) {
+      this.health -= 1;
+      this.x -= 5;
+      this.velocity_x = 0;
     }
   },
 
@@ -148,7 +158,9 @@ Game.Enemy.prototype = {
   moveRight:function() { this.velocity_x += 0.5; },
 
   update:function() {
+
       this.x += this.velocity_x;
       this.y += this.velocity_y;
+
   }
 }
