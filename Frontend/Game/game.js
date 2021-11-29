@@ -106,13 +106,13 @@ Game.Player.prototype = {
 
   testCollision:function(enemy) {
     if (this.bottom == enemy.top) {
+      enemy.health -=1;
+      return enemy;
+    }
+    else if (this.left > enemy.right || this.right < enemy.left) {
       this.health -= 1;
       this.x -= 11;
       this.y = 67;
-    }
-    else if (this.left > enemy.right || this.right < enemy.left) {
-      enemy.health -=1;
-      return enemy;
     }
   },
 
