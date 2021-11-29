@@ -3,6 +3,10 @@ const Display = function(canvas) {
   this.buffer  = document.createElement("canvas").getContext("2d"),
   this.context = canvas.getContext("2d");
 
+  this.displayHealth = function(health){
+    
+  }
+
   this.drawRectangle = function(x, y, width, height, color) {
 
     this.buffer.fillStyle = color;

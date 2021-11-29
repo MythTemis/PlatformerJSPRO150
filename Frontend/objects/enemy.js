@@ -1,7 +1,7 @@
 class enemy {
     //send in this.gamespace? something to signify where it will be.
     constructor(x, y) {
-        this.start_health = 2;
+        this.start_health = 1;
         this.color      = "#000000";
         this.height     = 5;
         this.velocity_x = 0;
@@ -30,6 +30,11 @@ class enemy {
                 this.moveRight;
             }
         },
+
+        get bottom() { return this.y + this.height; },
+        get left() { return this.x; },
+        get right() { return this.x + this.width; },
+        get top() { return this.y; },
 
         moveLeft:function()  { this.velocity_x -= 0.5; },
         moveRight:function() { this.velocity_x += 0.5; },

@@ -37,6 +37,11 @@ class player {
 
     },
 
+    get bottom() { return this.y + this.height; },
+    get left() { return this.x; },
+    get right() { return this.x + this.width; },
+    get top() { return this.y; },
+
     moveLeft:function()  { this.velocity_x -= 0.5; },
     moveRight:function() { this.velocity_x += 0.5; },
 

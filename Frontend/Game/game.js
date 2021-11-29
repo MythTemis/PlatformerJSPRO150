@@ -8,7 +8,7 @@ const Game = function() {
     gravity:3,
 
     player:new Game.Player(),
-    //enemy: new enemy(80,80),
+    enemy: new Game.Enemy(),
 
     height:72,
     width:128,
@@ -48,6 +48,7 @@ Game.prototype = { constructor : Game };
 
 Game.Player = function(x, y) {
 
+  this.health     = 3;
   this.color      = "#ff0000";
   this.height     = 5;
   this.jumping    = true;
@@ -58,6 +59,19 @@ Game.Player = function(x, y) {
   this.y          = 50;
 
 };
+
+Game.Enemy = function(x, y) {
+  
+  this.health     = 1;
+  this.color      = "#000000";
+  this.height     = 5;
+  this.velocity_x = 0;
+  this.velocity_y = 0;
+  this.width      = 5;
+  this.x          = 80;
+  this.y          = 67;
+  
+}
 
 Game.Player.prototype = {
 
@@ -82,8 +96,25 @@ Game.Player.prototype = {
 
   },
 
+  get bottom() { return this.y + this.height; },
+  get left() { return this.x; },
+  get right() { return this.x + this.width; },
+  get top() { return this.y; },
+
   moveLeft:function()  { this.velocity_x -= 0.5; },
   moveRight:function() { this.velocity_x += 0.5; },
+
+  testCollision:function(enemy) {
+    if (this.bottom == enemy.top) {
+      this.health -= 1;
+      this.x -= 11;
+      this.y = 67;
+    }
+    else if (this.left > enemy.right || this.right < enemy.left) {
+      enemy.health -=1;
+      return enemy;
+    }
+  },
 
   update:function() {
 
@@ -93,3 +124,31 @@ Game.Player.prototype = {
   }
 
 };
+
+Game.Enemy.prototype = {
+  constructor : this.enemy,
+
+  move:function() {
+      let minimum = 0, maximum = 1;
+      let num = Math.floor(Math.random() * (maximum - minimum)) + minimum
+
+      if(num == 0){
+          this.moveLeft;
+      }else{
+          this.moveRight;
+      }
+  },
+
+  get bottom() { return this.y + this.height; },
+  get left() { return this.x; },
+  get right() { return this.x + this.width; },
+  get top() { return this.y; },
+
+  moveLeft:function()  { this.velocity_x -= 0.5; },
+  moveRight:function() { this.velocity_x += 0.5; },
+
+  update:function() {
+      this.x += this.velocity_x;
+      this.y += this.velocity_y;
+  }
+}
