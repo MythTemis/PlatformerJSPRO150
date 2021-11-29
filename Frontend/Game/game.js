@@ -109,6 +109,7 @@ Game.Player.prototype = {
   moveRight:function() { this.velocity_x += 0.5; },
 
   enemyCollision:function(enemy) {
+
     if (this.bottom <= enemy.top && this.bottom > enemy.bottom) {
       enemy.health -=1;
       return enemy;
@@ -123,6 +124,7 @@ Game.Player.prototype = {
       this.x = enemy.left - 7;
       this.velocity_x = 0;
     }
+    
   },
 
   update:function() {
