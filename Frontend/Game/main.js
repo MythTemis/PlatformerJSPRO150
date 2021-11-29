@@ -20,9 +20,8 @@ window.addEventListener("load", function(event) {
         display.fill(game.world.background_color);
         display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, game.world.player.color);
         display.drawRectangle(game.world.enemy.x, game.world.enemy.y, game.world.enemy.width, game.world.enemy.height, game.world.enemy.color);
-        display.displayHealth(game.world.player.health, 0, 0);
         display.render();
-        
+
     };
     var update = function() {
         if (controller.left.active)  { game.world.player.moveLeft();  }
