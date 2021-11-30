@@ -389,7 +389,7 @@ Game.World.Player.prototype = {
 
   enemyCollision:function(enemy) {
 
-    if (Math.ceil(this.getBottom) <= enemy.getTop && Math.ceil(this.getBottom) > enemy.getBottom) {
+    if (Math.ceil(this.getBottom) >= enemy.getTop && Math.ceil(this.getBottom) < enemy.getBottom) {
       enemy.health -= 1;
       console.log(enemy.health);
     }
