@@ -355,6 +355,8 @@ Game.World.Object.prototype = {
 Game.World.Player = function(x, y) {
   Game.World.Object.call(this, 100, 100, 12, 12);
 
+  this.health     = 3;
+
   this.color1     = "#404040";
   this.color2     = "#f0f0f0";
 
@@ -380,27 +382,29 @@ Game.World.Player.prototype = {
 
   },
 
-  getTop:function() {},
-  getBottom:function() {},
-  getLeft:function() {},
-  getRight:function() {},
+  getBottom:function() { return this.y + this.height; },
+  getLeft:function() { return this.x; },
+  getRight:function() { return this.x + this.width; },
+  getTop:function() { return this.y; },
 
   enemyCollision:function(enemy) {
 
-    if (this.bottom <= enemy.top && this.bottom > enemy.bottom) {
-      enemy.health -=1;
-      return enemy;
+    if (Math.ceil(this.getBottom) <= enemy.getTop && Math.ceil(this.getBottom) > enemy.getBottom) {
+      enemy.health -= 1;
+      console.log(enemy.health);
     }
-    else if (this.left >= enemy.right && this.left < enemy.left) {
+    else if (Math.ceil(this.getLeft) >= enemy.getRight && Math.ceil(this.getLeft) < enemy.getLeft) {
       this.health -= 1;
-      this.x = enemy.right + 2;
+      this.x = enemy.getRight + 2;
       this.velocity_x = 0;
     }
-    else if (this.right <= enemy.left && this.right > enemy.right) {
+    else if (Math.ceil(this.getRight) <= enemy.getLeft && Math.ceil(this.getRight) > enemy.getRight) {
       this.health -= 1;
-      this.x = enemy.left - 7;
+      this.x = enemy.getLeft - 14;
       this.velocity_x = 0;
     }
+
+    return enemy;
 
   },
 
@@ -420,6 +424,8 @@ Game.World.Player.prototype = {
 
 Game.World.Enemy = function(x, y) {
   Game.World.Object.call(this, x, y, 12, 12);
+
+  this.health     = 1;
 
   this.color1     = "#f0f0f0";
   this.color2     = "#404040";
@@ -459,6 +465,11 @@ Game.World.Enemy.prototype = {
     }
 
   },
+
+  getBottom:function() { return this.y + this.height; },
+  getLeft:function() { return this.x; },
+  getRight:function() { return this.x + this.width; },
+  getTop:function() { return this.y; },
 
   moveLeft:function()  { this.velocity_x -= 0.5; },
   moveRight:function() { this.velocity_x += 0.5; },

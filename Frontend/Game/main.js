@@ -2,6 +2,8 @@ window.addEventListener("load", function(event) {
 
     "use strict";
 
+    var enemyAlive = true;
+
 
 
     var keyDownUp = function(event) {
@@ -21,7 +23,9 @@ window.addEventListener("load", function(event) {
 
         display.drawMap(game.world.map, game.world.columns);
         display.drawObject(game.world.player, game.world.player.color1, game.world.player.color2);
-        display.drawObject(game.world.enemy, game.world.enemy.color1, game.world.enemy.color2);
+        if (enemyAlive) {
+            display.drawObject(game.world.enemy, game.world.enemy.color1, game.world.enemy.color2);
+        }
         display.render();
     };
 
@@ -38,6 +42,12 @@ window.addEventListener("load", function(event) {
         }
 
         game.world.enemy.move();
+
+        game.world.enemy = game.world.player.enemyCollision(game.world.enemy);
+
+        if (game.world.enemy.health == 0) {
+            enemyAlive = false;
+        }
 
         game.update();
 
