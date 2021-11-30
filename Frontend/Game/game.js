@@ -358,6 +358,9 @@ Game.World.Player = function(x, y) {
   this.color1     = "#404040";
   this.color2     = "#f0f0f0";
 
+  this.height     = 12;
+  this.width      = 12;
+
   this.jumping    = true;
   this.velocity_x = 0;
   this.velocity_y = 0;
@@ -373,6 +376,30 @@ Game.World.Player.prototype = {
       this.jumping     = true;
       this.velocity_y -= 27;
 
+    }
+
+  },
+
+  getTop:function() {},
+  getBottom:function() {},
+  getLeft:function() {},
+  getRight:function() {},
+
+  enemyCollision:function(enemy) {
+
+    if (this.bottom <= enemy.top && this.bottom > enemy.bottom) {
+      enemy.health -=1;
+      return enemy;
+    }
+    else if (this.left >= enemy.right && this.left < enemy.left) {
+      this.health -= 1;
+      this.x = enemy.right + 2;
+      this.velocity_x = 0;
+    }
+    else if (this.right <= enemy.left && this.right > enemy.right) {
+      this.health -= 1;
+      this.x = enemy.left - 7;
+      this.velocity_x = 0;
     }
 
   },
@@ -396,6 +423,9 @@ Game.World.Enemy = function(x, y) {
 
   this.color1     = "#f0f0f0";
   this.color2     = "#404040";
+
+  this.height     = 12;
+  this.width      = 12;
 
   this.velocity_x = 0;
   this.velocity_y = 0;
