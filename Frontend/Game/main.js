@@ -20,7 +20,8 @@ window.addEventListener("load", function(event) {
     var render = function() {
 
         display.drawMap(game.world.map, game.world.columns);
-        display.drawPlayer(game.world.player, game.world.player.color1, game.world.player.color2);
+        display.drawObject(game.world.player, game.world.player.color1, game.world.player.color2);
+        display.drawObject(game.world.enemy, game.world.enemy.color1, game.world.enemy.color2);
         display.render();
     };
 
@@ -35,6 +36,8 @@ window.addEventListener("load", function(event) {
         if (controller.up.active)  { 
             game.world.player.jump(); controller.up.active = false; 
         }
+
+        game.world.enemy.move();
 
         game.update();
 

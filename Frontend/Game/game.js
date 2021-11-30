@@ -20,6 +20,7 @@ Game.World = function(friction = 0.9, gravity = 3) {
   this.gravity  = gravity;
 
   this.player   = new Game.World.Player();
+  this.enemy    = new Game.World.Enemy(112, 372);
 
   this.columns   = 12;
   this.rows      = 9;
@@ -114,6 +115,8 @@ Game.World.prototype = {
 
     this.player.velocity_x *= this.friction;
     this.player.velocity_y *= this.friction;
+
+    this.enemy.update();
 
     this.collideObject(this.player);
 
@@ -378,6 +381,60 @@ Game.World.Player.prototype = {
   moveRight:function() { this.velocity_x += 0.5; },
 
   update:function() {
+
+    this.x_old = this.x;
+    this.y_old = this.y;
+    this.x += this.velocity_x;
+    this.y += this.velocity_y;
+
+  }
+
+};
+
+Game.World.Enemy = function(x, y) {
+  Game.World.Object.call(this, x, y, 12, 12);
+
+  this.color1     = "#f0f0f0";
+  this.color2     = "#404040";
+
+  this.velocity_x = 0;
+  this.velocity_y = 0;
+
+  this.timeCount = 0;
+
+};
+
+Game.World.Enemy.prototype = {
+
+  move:function() {
+
+    if (this.timeCount < 75) {
+      this.velocity_x = 1;
+      this.timeCount++;
+    }
+    else if (this.timeCount >= 75 && this.timeCount < 105) {
+      this.velocity_x = 0;
+      this.timeCount++;
+    }
+    else if (this.timeCount >= 105 && this.timeCount < 180) {
+      this.velocity_x = -1;
+      this.timeCount++;
+    }
+    else if (this.timeCount >= 180 && this.timeCount < 210) {
+      this.velocity_x = 0;
+      this.timeCount++;
+    }
+    else if (this.timeCount == 210) {
+      this.timeCount = 0;
+    }
+
+  },
+
+  moveLeft:function()  { this.velocity_x -= 0.5; },
+  moveRight:function() { this.velocity_x += 0.5; },
+
+  update:function() {
+
     this.x_old = this.x;
     this.y_old = this.y;
     this.x += this.velocity_x;
