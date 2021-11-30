@@ -11,18 +11,17 @@ window.addEventListener("load", function(event) {
     AssetsManager.prototype = {
         constructor: Game.AssetsManager,
 
-        requestJSON:function(url, callback) {
-
-            let request = new XMLHttpRequest();
-
-            request.addEventListener("load", function(event) {
-
-                callback(JSON.parse(this.responseText));
-
-            }, { once:true });
-
-            request.open("GET", url);
-            request.send();
+        requestJSON: async function(url, callback) {
+            
+            const response = await fetch(url);
+            const data = await response.json();
+            response.addEventListener('load', function(evt) {
+                callback(data)
+                
+            })
+            
+            console.log(data);
+            return data;
         },
 
         requestImage:function(url, callback) {
@@ -49,7 +48,7 @@ window.addEventListener("load", function(event) {
 
     var resize = function(event) {
 
-        display.resize(document.documentElement.clientWidth - 32, document.documentElement.clientHeight - 32, game.world.height / game.world.width);
+        display.resize(document.documentElement.clientWidth, document.documentElement.clientHeight, game.world.height / game.world.width);
         display.render();
 
     };
