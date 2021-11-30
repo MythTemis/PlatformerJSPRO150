@@ -41,6 +41,7 @@ Game.Object.prototype = {
 };
 
 
+
 Game.World = function(friction = 0.9, gravity = 3) {
 
   this.collider = new Game.World.Collider();
