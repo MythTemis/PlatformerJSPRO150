@@ -4,8 +4,8 @@ window.addEventListener("load", function(event) {
   
     //// CONSTANTS ////
   
-    const ZONE_PREFIX = "07/zone";
-    const ZONE_SUFFIX = ".json";
+    const LEVEL_PREFIX = "Levels/level";
+    const LEVEL_SUFFIX = ".json";
   
         /////////////////
       //// CLASSES ////
@@ -82,16 +82,16 @@ window.addEventListener("load", function(event) {
       display.drawMap   (assets_manager.tile_set_image,
       game.world.tile_set.columns, game.world.graphical_map, game.world.columns,  game.world.tile_set.tile_size);
   
-      for (let index = game.world.carrots.length - 1; index > -1; -- index) {
+      for (let index = game.world.keys.length - 1; index > -1; -- index) {
   
-        let carrot = game.world.carrots[index];
+        let key = game.world.keys[index];
   
-        frame = game.world.tile_set.frames[carrot.frame_value];
+        frame = game.world.tile_set.frames[key.frame_value];
   
         display.drawObject(assets_manager.tile_set_image,
         frame.x, frame.y,
-        carrot.x + Math.floor(carrot.width * 0.5 - frame.width * 0.5) + frame.offset_x,
-        carrot.y + frame.offset_y, frame.width, frame.height);
+        key.x + Math.floor(carrot.width * 0.5 - frame.width * 0.5) + frame.offset_x,
+        key.y + frame.offset_y, frame.width, frame.height);
   
       }
   
@@ -102,20 +102,7 @@ window.addEventListener("load", function(event) {
       game.world.player.x + Math.floor(game.world.player.width * 0.5 - frame.width * 0.5) + frame.offset_x,
       game.world.player.y + frame.offset_y, frame.width, frame.height);
   
-      for (let index = game.world.grass.length - 1; index > -1; -- index) {
-  
-        let grass = game.world.grass[index];
-  
-        frame = game.world.tile_set.frames[grass.frame_value];
-  
-        display.drawObject(assets_manager.tile_set_image,
-        frame.x, frame.y,
-        grass.x + frame.offset_x,
-        grass.y + frame.offset_y, frame.width, frame.height);
-  
-      }
-  
-      p.innerHTML = "Carrots: " + game.world.carrot_count;
+      p.innerHTML = "Keys: " + game.world.key_count;
   
       display.render();
   
@@ -131,8 +118,8 @@ window.addEventListener("load", function(event) {
 
         if (game.world.door) {
             engine.stop();
-            assets_manager.requestJSON(ZONE_PREFIX + game.world.door.destination_zone + ZONE_SUFFIX, (zone) => {
-            game.world.setup(zone);
+            assets_manager.requestJSON(LEVEL_PREFIX + game.world.door.destination_zone + LEVEL_SUFFIX, (level) => {
+            game.world.setup(level);
 
             engine.start();
 
@@ -153,7 +140,7 @@ window.addEventListener("load", function(event) {
     var engine         = new Engine(1000/30, render, update);
     var p              = document.createElement("p");
     p.setAttribute("style", "color:#c07000; font-size:2.0em; position:fixed;");
-    p.innerHTML = "Carrots: 0";
+    p.innerHTML = "Keys: 0";
     document.body.appendChild(p);
 
         ////////////////////
@@ -164,9 +151,9 @@ window.addEventListener("load", function(event) {
     display.buffer.canvas.width  = game.world.width;
     display.buffer.imageSmoothingEnabled = false;
 
-    assets_manager.requestJSON(ZONE_PREFIX + game.world.zone_id + ZONE_SUFFIX, (zone) => {
+    assets_manager.requestJSON(LEVEL_PREFIX + game.world.level_id + LEVEL_SUFFIX, (level => {(
 
-        game.world.setup(zone);
+        game.world.setup(level));
   
         assets_manager.requestImage("rabbit-trap.png", (image) => {
             assets_manager.tile_set_image = image;
@@ -175,7 +162,7 @@ window.addEventListener("load", function(event) {
   
         });
   
-    });
+    }));
   
     window.addEventListener("keydown", keyDownUp);
     window.addEventListener("keyup"  , keyDownUp);

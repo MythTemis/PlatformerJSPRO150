@@ -33,38 +33,38 @@ Game.Animator.prototype = {
     case "loop" : this.loop(); break;
     case "pause":              break;
 
-   }
+    }
 
- },
+  },
 
- changeFrameSet(frame_set, mode, delay = 10, frame_index = 0) {
+  changeFrameSet(frame_set, mode, delay = 10, frame_index = 0) {
 
-   if (this.frame_set === frame_set) { return; }
+    if (this.frame_set === frame_set) { return; }
 
-   this.count       = 0;
-   this.delay       = delay;
-   this.frame_set   = frame_set;
-   this.frame_index = frame_index;
-   this.frame_value = frame_set[frame_index];
-   this.mode        = mode;
+    this.count       = 0;
+    this.delay       = delay;
+    this.frame_set   = frame_set;
+    this.frame_index = frame_index;
+    this.frame_value = frame_set[frame_index];
+    this.mode        = mode;
 
- },
+  },
 
- loop:function() {
+  loop:function() {
 
-   this.count ++;
+    this.count ++;
 
-   while(this.count > this.delay) {
+    while(this.count > this.delay) {
 
-     this.count -= this.delay;
+      this.count -= this.delay;
 
-     this.frame_index = (this.frame_index < this.frame_set.length - 1) ? this.frame_index + 1 : 0;
+      this.frame_index = (this.frame_index < this.frame_set.length - 1) ? this.frame_index + 1 : 0;
 
-     this.frame_value = this.frame_set[this.frame_index];
+      this.frame_value = this.frame_set[this.frame_index];
 
-   }
+    }
 
- }
+  }
 
 };
 
@@ -78,36 +78,35 @@ Game.Collider = function() {
       case  1:     this.collidePlatformTop    (object, tile_y            ); break;
       case  2:     this.collidePlatformRight  (object, tile_x + tile_size); break;
       case  3: if (this.collidePlatformTop    (object, tile_y            )) return;
-                   this.collidePlatformRight  (object, tile_x + tile_size); break;
+                    this.collidePlatformRight  (object, tile_x + tile_size); break;
       case  4:     this.collidePlatformBottom (object, tile_y + tile_size); break;
       case  5: if (this.collidePlatformTop    (object, tile_y            )) return;
-                   this.collidePlatformBottom (object, tile_y + tile_size); break;
+                    this.collidePlatformBottom (object, tile_y + tile_size); break;
       case  6: if (this.collidePlatformRight  (object, tile_x + tile_size)) return;
-                   this.collidePlatformBottom (object, tile_y + tile_size); break;
+                    this.collidePlatformBottom (object, tile_y + tile_size); break;
       case  7: if (this.collidePlatformTop    (object, tile_y            )) return;
-               if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
-                   this.collidePlatformRight  (object, tile_x + tile_size); break;
+                if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
+                    this.collidePlatformRight  (object, tile_x + tile_size); break;
       case  8:     this.collidePlatformLeft   (object, tile_x            ); break;
       case  9: if (this.collidePlatformTop    (object, tile_y            )) return;
                   this.collidePlatformLeft   (object, tile_x            ); break;
       case 10: if (this.collidePlatformLeft   (object, tile_x            )) return;
                   this.collidePlatformRight  (object, tile_x + tile_size); break;
       case 11: if (this.collidePlatformTop    (object, tile_y            )) return;
-               if (this.collidePlatformLeft   (object, tile_x            )) return;
-                   this.collidePlatformRight  (object, tile_x + tile_size); break;
+                if (this.collidePlatformLeft   (object, tile_x            )) return;
+                    this.collidePlatformRight  (object, tile_x + tile_size); break;
       case 12: if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
-                   this.collidePlatformLeft   (object, tile_x            ); break;
+                    this.collidePlatformLeft   (object, tile_x            ); break;
       case 13: if (this.collidePlatformTop    (object, tile_y            )) return;
-               if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
-                   this.collidePlatformLeft   (object, tile_x            ); break;
+                if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
+                    this.collidePlatformLeft   (object, tile_x            ); break;
       case 14: if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
-               if (this.collidePlatformLeft   (object, tile_x            )) return;
-                   this.collidePlatformRight  (object, tile_x + tile_size); break;
+                if (this.collidePlatformLeft   (object, tile_x            )) return;
+                    this.collidePlatformRight  (object, tile_x + tile_size); break;
       case 15: if (this.collidePlatformTop    (object, tile_y            )) return;
-               if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
-               if (this.collidePlatformLeft   (object, tile_x            )) return;
-                   this.collidePlatformRight  (object, tile_x + tile_size); break;
-
+                if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
+                if (this.collidePlatformLeft   (object, tile_x            )) return;
+                    this.collidePlatformRight  (object, tile_x + tile_size); break;
     }
 
   }
@@ -166,7 +165,7 @@ Game.Collider.prototype = {
 
   }
 
- };
+  };
 
 // Added default values of 0 for offset_x and offset_y
 Game.Frame = function(x, y, width, height, offset_x = 0, offset_y = 0) {
@@ -183,10 +182,10 @@ Game.Frame.prototype = { constructor: Game.Frame };
 
 Game.Object = function(x, y, width, height) {
 
- this.height = height;
- this.width  = width;
- this.x      = x;
- this.y      = y;
+  this.height = height;
+  this.width  = width;
+  this.x      = x;
+  this.y      = y;
 
 };
 Game.Object.prototype = {
@@ -265,26 +264,30 @@ Game.MovingObject.prototype = {
 Object.assign(Game.MovingObject.prototype, Game.Object.prototype);
 Game.MovingObject.prototype.constructor = Game.MovingObject;
 
-/* The carrot class extends Game.Object and Game.Animation. */
-Game.Carrot = function(x, y) {
+/* class extends Game.Object. */
+Game.Key = function(x, y) {
   Game.Object.call(this, x, y, 7, 14);
 
-};
+  positionX = 20;
+  positionY = 30;
 
 
 };
-Object.assign(Game.Carrot.prototype, Game.Object.prototype);
-Game.Carrot.prototype.constructor = Game.Carrot;
 
-Object.assign(Game.Grass.prototype, Game.Animator.prototype);
+Game.Key.prototype = {
+
+}
+
+Object.assign(Game.Key.prototype, Game.Object.prototype);
+Game.Key.prototype.constructor = Game.Key;
 
 Game.Door = function(door) {
 
- Game.Object.call(this, door.x, door.y, door.width, door.height);
+  Game.Object.call(this, door.x, door.y, door.width, door.height);
 
- this.destination_x    = door.destination_x;
- this.destination_y    = door.destination_y;
- this.destination_zone = door.destination_zone;
+  this.destination_x    = door.destination_x;
+  this.destination_y    = door.destination_y;
+  this.destination_zone = door.destination_zone;
 
 };
 Game.Door.prototype = {};
@@ -388,10 +391,10 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(8, 16);
   this.player       = new Game.Player(32, 76);
 
-  this.zone_id      = "00";
+  this.level_id      = "00";
 
-  this.carrots      = [];// the array of carrots in this zone;
-  this.carrot_count = 0;// the number of carrots you have.
+  this.keys         = [];// the array of keys in this zone;
+  this.key_count     = 0;// the number of keys you have.
   this.doors        = [];
   this.door         = undefined;
 
@@ -432,35 +435,27 @@ Game.World.prototype = {
 
   },
 
-  setup:function(zone) {
+  setup:function(level) {
 
-    this.carrots            = new Array();
+    this.keys               = new Array();
     this.doors              = new Array();
-    this.grass              = new Array();
-    this.collision_map      = zone.collision_map;
-    this.graphical_map      = zone.graphical_map;
-    this.columns            = zone.columns;
-    this.rows               = zone.rows;
-    this.zone_id            = zone.id;
+    this.collision_map      = level.collision_map;
+    this.graphical_map      = level.graphical_map;
+    this.columns            = level.columns;
+    this.rows               = level.rows;
+    this.level_id            = level.id;
 
-    for (let index = zone.carrots.length - 1; index > -1; -- index) {
+    for (let index = level.keys.length - 1; index > -1; -- index) {
 
-      let carrot = zone.carrots[index];
-      this.carrots[index] = new Game.Carrot(carrot[0] * this.tile_set.tile_size + 5, carrot[1] * this.tile_set.tile_size - 2);
+      let key = level.keys[index];
+      this.keys[index] = new Game.Key(key[0] * this.tile_set.tile_size + 5, key[1] * this.tile_set.tile_size - 2);
 
     }
 
-    for (let index = zone.doors.length - 1; index > -1; -- index) {
+    for (let index = level.doors.length - 1; index > -1; -- index) {
 
-      let door = zone.doors[index];
+      let door = level.doors[index];
       this.doors[index] = new Game.Door(door);
-
-    }
-
-    for (let index = zone.grass.length - 1; index > -1; -- index) {
-
-      let grass = zone.grass[index];
-      this.grass[index] = new Game.Grass(grass[0] * this.tile_set.tile_size, grass[1] * this.tile_set.tile_size + 12);
 
     }
 
@@ -492,18 +487,16 @@ Game.World.prototype = {
 
     this.collideObject(this.player);
 
-    for (let index = this.carrots.length - 1; index > -1; -- index) {
+    for (let index = this.keys.length - 1; index > -1; -- index) {
 
-      let carrot = this.carrots[index];
+      let key = this.key[index];
 
-      carrot.updatePosition();
-      carrot.animate();
+      key.updatePosition();
 
-      if (carrot.collideObject(this.player)) {
+      if (key.collideObject(this.player)) {
 
-        this.carrots.splice(this.carrots.indexOf(carrot), 1);
-        this.carrot_count ++;
-
+        this.keys.splice(this.keys.indexOf(key), 1);
+        this.key_count ++;
       }
 
     }
@@ -519,17 +512,7 @@ Game.World.prototype = {
       };
 
     }
-
-    for (let index = this.grass.length - 1; index > -1; -- index) {
-
-      let grass = this.grass[index];
-
-      grass.animate();
-
-    }
-
     this.player.updateAnimation();
-
   }
 
 };
