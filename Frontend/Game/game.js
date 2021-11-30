@@ -12,6 +12,34 @@ const Game = function() {
 
 Game.prototype = { constructor : Game };
 
+Game.Object = function(x, y, width, height) {
+
+  this.height = height;
+  this.width  = width;
+  this.x      = x;
+  this.y      = y;
+
+};
+
+ /* I added getCenterX, getCenterY, setCenterX, and setCenterY */
+Game.Object.prototype = {
+
+  constructor:Game.Object,
+
+  getBottom : function()  { return this.y + this.height;       },
+  getCenterX: function()  { return this.x + this.width  * 0.5; },
+  getCenterY: function()  { return this.y + this.height * 0.5; },
+  getLeft   : function()  { return this.x;                     },
+  getRight  : function()  { return this.x + this.width;        },
+  getTop    : function()  { return this.y;                     },
+  setBottom : function(y) { this.y = y - this.height;          },
+  setCenterX: function(x) { this.x = x - this.width  * 0.5;    },
+  setCenterY: function(y) { this.y = y - this.height * 0.5;    },
+  setLeft   : function(x) { this.x = x;                        },
+  setRight  : function(x) { this.x = x - this.width;           },
+  setTop    : function(y) { this.y = y;                        }
+};
+
 
 Game.World = function(friction = 0.9, gravity = 3) {
 
@@ -19,36 +47,18 @@ Game.World = function(friction = 0.9, gravity = 3) {
   this.friction = friction;
   this.gravity  = gravity;
 
-  this.player   = new Game.World.Player();
-
   this.columns   = 12;
   this.rows      = 9;
-  this.tile_size = 48;
 
-  this.map = [13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 
-              13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 
-              13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 
-              35, 38, 38, 34, 38, 36, 33, 36, 38, 34, 38, 35, 
-              58, 58, 58, 58, 58, 57, 58, 59, 58, 58, 58, 58, 
-              15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 
-              15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 
-              15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 
-              22, 23, 22, 23, 22, 23, 22, 23, 22, 23, 22, 23];
+  this.tile_set = new Game.TileSet(5, 48)
+  this.player   = new Game.Player();
 
-/*Collision system
-          0
-        0   0
-          0 */
+  this.zone_id = '0';
 
-  this.collisionMap = [0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      01,01,01,01,01,01,01,01,01,01,01,01];
+  this.doors = [];
+  this.door = undefined;
+
+  
 
   this.height   = this.tile_size * this.rows;
   this.width    = this.tile_size * this.columns;
@@ -107,18 +117,56 @@ Game.World.prototype = {
       this.collider.collide(value, object, right * this.tile_size, bottom * this.tile_size, this.tile_size);
   },
 
+  setup:function(zone) {
+
+    this.graphical_map = zone.graphical_map;
+    this.collision_map = zone.collision_map;
+    this.columns = zone.columns;
+    this.rows = zone.rows;
+    this.doors = new Array();
+    this.zone_id = zone.id;
+
+    //Generating New Doors
+    for (let index = zone.doors.length - 1; index > -1; -- index) {
+
+      let door = zone.doors[index];
+      this.doors[index] = new Game.Door(door);
+
+    }
+    if (this.door) { 
+      if (this.door.destination_x != -1) {
+
+        this.player.setCenterX   (this.door.destination_x);
+        this.player.setOldCenterX(this.door.destination_x);
+
+      }
+
+      if (this.door.destination_y != -1) {
+
+        this.player.setCenterY   (this.door.destination_y);
+        this.player.setOldCenterY(this.door.destination_y);
+
+      }
+
+      this.door = undefined;
+
+    }
+
+  },
+
   update:function() {
 
-    this.player.velocity_y += this.gravity;
-    this.player.update();
-
-    this.player.velocity_x *= this.friction;
-    this.player.velocity_y *= this.friction;
-
+    this.player.updatePosition(this.gravity, this.friction);
     this.collideObject(this.player);
 
-  }
 
+    for(let i = this.doors.length - 1; i > -1; i--){
+      let door = this.doors[i];
+      if(door.collideObject(this.player)) {
+        this.door = door;
+      }
+    }
+  }
 };
 
 Game.World.Collider = function() {
@@ -349,7 +397,28 @@ Game.World.Object.prototype = {
 
 };
 
-Game.World.Player = function(x, y) {
+Game.Door = function(door) {
+  Game.Object.call(this, door.x, door.y, door.width, door.height);
+
+  this.destination_x = door.destination_x;
+  this.destination_y = door.destination_y;
+}
+
+Game.Door.prototype = {
+  collideObject(obj) {
+    let center_x = obj.getCenterX();
+    let center_y = obj.getCenterY();
+    if (center_x < this.getLeft() || center_x > this.getRight() || center_y < this.getTop()  || center_y > this.getBottom()) {
+        return false;
+      } 
+
+    return true;
+  }
+}
+Object.assign(Game.Door.prototype, Game.Object.prototype);
+Game.Door.prototype.constructor = Game.Door;
+
+Game.Player = function(x, y) {
   Game.World.Object.call(this, 100, 100, 12, 12);
 
   this.color1     = "#404040";
@@ -361,7 +430,7 @@ Game.World.Player = function(x, y) {
 
 };
 
-Game.World.Player.prototype = {
+Game.Player.prototype = {
 
   jump:function() {
 
@@ -374,18 +443,32 @@ Game.World.Player.prototype = {
 
   },
 
-  moveLeft:function()  { this.velocity_x -= 0.5; },
-  moveRight:function() { this.velocity_x += 0.5; },
+  moveLeft:function()  { 
+    this.velocity_x -= 0.5; 
+  },
+  moveRight:function() { 
+    this.velocity_x += 0.5; 
+  },
 
-  update:function() {
+  updatePosition:function(gravity, friction) {
     this.x_old = this.x;
     this.y_old = this.y;
+    this.velocity_y += gravity;
     this.x += this.velocity_x;
     this.y += this.velocity_y;
+
+    this.velocity_x *= friction;
+    this.velocity_y *= friction;
 
   }
 
 };
 
-Object.assign(Game.World.Player.prototype, Game.World.Object.prototype);
-Game.World.Player.prototype.constructor = Game.World.Player;
+Object.assign(Game.Player.prototype, Game.World.Object.prototype);
+Game.Player.prototype.constructor = Game.Player;
+
+Game.TileSet = function(columns, tile_size) {
+  this.tile_size = tile_size;
+  this.columns = columns;
+}
+Game.TileSet.prototype = { constructor: Game.TileSet };

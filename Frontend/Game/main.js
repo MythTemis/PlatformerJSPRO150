@@ -2,7 +2,44 @@ window.addEventListener("load", function(event) {
 
     "use strict";
 
+    const ZONE_PREFIX = "Worlds/world";
+    const ZONE_SUFFIX = ".json";
 
+    const AssetsManager = function() {
+        this.tile_set_image = undefined;
+    }
+    AssetsManager.prototype = {
+        constructor: Game.AssetsManager,
+
+        requestJSON:function(url, callback) {
+
+            let request = new XMLHttpRequest();
+
+            request.addEventListener("load", function(event) {
+
+                callback(JSON.parse(this.responseText));
+
+            }, { once:true });
+
+            request.open("GET", url);
+            request.send();
+        },
+
+        requestImage:function(url, callback) {
+
+            let image = new Image();
+
+            image.addEventListener("load", function(event) {
+
+                callback(image);
+
+            }, { once:true });
+
+            image.src = url;
+
+        },
+
+    }
 
     var keyDownUp = function(event) {
 
@@ -19,7 +56,7 @@ window.addEventListener("load", function(event) {
 
     var render = function() {
 
-        display.drawMap(game.world.map, game.world.columns);
+        display.drawMap(assets_manager.tile_set_image, game.world.tile_set.columns, game.world.map, game.world.columns,  game.world.tile_set.tile_size);
         display.drawPlayer(game.world.player, game.world.player.color1, game.world.player.color2);
         display.render();
     };
@@ -38,11 +75,25 @@ window.addEventListener("load", function(event) {
 
         game.update();
 
+        if(game.world.door) {
+            engine.stop();
+
+            assets_manager.requestJSON(ZONE_PREFIX + game.world.door.destination_zone + ZONE_SUFFIX, (zone) => {
+
+                game.world.setup(zone);
+        
+                engine.start();
+        
+            });
+            return;
+        }
+
     };
 
     
 
     var controller = new Controller();
+    var assets_manager = new AssetsManager();
     var display = new Display(document.querySelector("canvas"));
     var game = new Game();
     var engine = new Engine(1000/30, render, update);
@@ -51,16 +102,23 @@ window.addEventListener("load", function(event) {
 
     display.buffer.canvas.height = game.world.height;
     display.buffer.canvas.width = game.world.width;
+    display.buffer.imageSmoothingEnabled = false;
 
-    display.tile_sheet.image.addEventListener("load", function(event) {
+    assets_manager.requestJSON(ZONE_PREFIX + game.world.zone_id + ZONE_SUFFIX, (zone) => {
 
-        resize();
+        game.world.setup(zone);
+    
+        assets_manager.requestImage("Data/WorldTiles.png", (image) => {
+    
+            assets_manager.tile_set_image = image;
+    
+            resize();
+            engine.start();
+    
+        });
+    
+    });
 
-        engine.start();
-
-    }, { once:true });
-
-    display.tile_sheet.image.src = "Data/WorldTiles.png";
 
     window.addEventListener("keydown", keyDownUp);
     window.addEventListener("keyup",   keyDownUp);

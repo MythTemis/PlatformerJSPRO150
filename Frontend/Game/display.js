@@ -3,21 +3,20 @@ const Display = function(canvas) {
   this.buffer  = document.createElement("canvas").getContext("2d"),
   this.context = canvas.getContext("2d");
 
-  this.tile_sheet = new Display.TileSheet(48, 5);
   
 
   //This draws the given map
-  this.drawMap = function(map, columns) {
+  this.drawMap = function(image, image_columns, map, map_columns, tile_size) {
 
     for (let index = map.length - 1; index > -1; -- index) {
 
-      let value = map[index] - 1;
-      let source_x = (value % this.tile_sheet.columns) * this.tile_sheet.tile_size;
-      let source_y = Math.floor(value / this.tile_sheet.columns) * this.tile_sheet.tile_size;
-      let destination_x = (index % columns) * this.tile_sheet.tile_size;
-      let destination_y = Math.floor(index / columns) * this.tile_sheet.tile_size;
+      let value = map[index];
+      let source_x = (value % image_columns) * tile_size;
+      let source_y = Math.floor(value / image_columns) * tile_size;
+      let destination_x = (index % map_columns  ) * tile_size;
+      let destination_y = Math.floor(index / map_columns  ) * tile_size;
 
-      this.buffer.drawImage(this.tile_sheet.image, source_x, source_y, this.tile_sheet.tile_size, this.tile_sheet.tile_size, destination_x, destination_y, this.tile_sheet.tile_size, this.tile_sheet.tile_size);
+      this.buffer.drawImage(image, source_x, source_y, tile_size, tile_size, destination_x, destination_y, tile_size, tile_size);
 
     }
 
@@ -64,12 +63,3 @@ Display.prototype = {
 
 };
 
-Display.TileSheet = function(tile_size, columns) {
-
-  this.image = new Image();
-  this.tile_size = tile_size;
-  this.columns = columns;
-
-};
-
-Display.TileSheet.prototype = {};
