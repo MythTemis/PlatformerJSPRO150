@@ -11,17 +11,11 @@ window.addEventListener("load", function(event) {
     AssetsManager.prototype = {
         constructor: Game.AssetsManager,
 
-        requestJSON: async function(url, callback) {
-            
-            const response = await fetch(url);
+        requestJSON: async function(id, callback) {
+            const response = await fetch(`http://localhost:3000/world/${id}`);
             const data = await response.json();
-            response.addEventListener('load', function(evt) {
-                callback(data)
-                
-            })
-            
             console.log(data);
-            return data;
+            callback(data);
         },
 
         requestImage:function(url, callback) {
@@ -43,11 +37,9 @@ window.addEventListener("load", function(event) {
     var keyDownUp = function(event) {
 
         controller.keyDownUp(event.type, event.key);
-
     };
 
     var resize = function(event) {
-
         display.resize(document.documentElement.clientWidth, document.documentElement.clientHeight, game.world.height / game.world.width);
         display.render();
 
@@ -77,7 +69,7 @@ window.addEventListener("load", function(event) {
         if(game.world.door) {
             engine.stop();
 
-            assets_manager.requestJSON(ZONE_PREFIX + game.world.door.destination_zone + ZONE_SUFFIX, (zone) => {
+            assets_manager.requestJSON(game.world.door.destination_zone, (zone) => {
 
                 game.world.setup(zone);
         
@@ -103,12 +95,12 @@ window.addEventListener("load", function(event) {
     display.buffer.canvas.width = game.world.width;
     display.buffer.imageSmoothingEnabled = false;
 
-    assets_manager.requestJSON(ZONE_PREFIX + game.world.zone_id + ZONE_SUFFIX, (zone) => {
+    assets_manager.requestJSON(game.world.zone_id, (zone) => {
 
         game.world.setup(zone);
-    
+        
         assets_manager.requestImage("Data/WorldTiles.png", (image) => {
-    
+
             assets_manager.tile_set_image = image;
     
             resize();
