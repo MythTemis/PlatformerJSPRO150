@@ -70,7 +70,7 @@ window.addEventListener("load", function(event) {
             engine.stop();
 
             assets_manager.requestJSON(game.world.door.destination_zone, (zone) => {
-
+                console.log(zone.Game.zone_id);
                 game.world.setup(zone);
         
                 engine.start();
