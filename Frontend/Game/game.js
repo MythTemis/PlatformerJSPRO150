@@ -73,7 +73,7 @@ Game.Collider = function() {
       case 11:  
         if(this.collideTop(obj, tile_y)){
           return;
-        }
+        }w
         if(this.collideLeft(obj, tile_x)){
           return;
         }
@@ -183,7 +183,6 @@ Game.Object = function(x, y, width, height) {
 
 };
 
- /* I added getCenterX, getCenterY, setCenterX, and setCenterY */
 Game.Object.prototype = {
 
   constructor:Game.Object,
@@ -201,19 +200,18 @@ Game.Object.prototype = {
   setRight  : function(x) { this.x = x - this.width;           },
   setTop    : function(y) { this.y = y;                        }
 };
-Game.MovingObject = function(x, y, width, height, velocity_max = 15) {
+Game.MovingObject = function(x, y, width, height, velocity_max = 20) {
 
   Game.Object.call(this, x, y, width, height);
 
   this.jumping      = false;
-  this.velocity_max = velocity_max;// added velocity_max so velocity can't go past 16
+  this.velocity_max = velocity_max;
   this.velocity_x   = 0;
   this.velocity_y   = 0;
   this.x_old        = x;
   this.y_old        = y;
 
 };
-/* I added setCenterX, setCenterY, getCenterX, and getCenterY */
 Game.MovingObject.prototype = {
 
   getOldBottom : function()  { return this.y_old + this.height;       },
@@ -244,7 +242,6 @@ Game.Door = function(door) {
 };
 Game.Door.prototype = {
 
- /* Tests for collision between this door object and a MovingObject. */
   collideObject(object) {
 
     let center_x = object.getCenterX();
@@ -276,11 +273,10 @@ Game.Player.prototype = {
 
   jump: function() {
 
-    /* Made it so you can only jump if you aren't falling faster than 10px per frame. */
     if (!this.jumping && this.velocity_y < 10) {
 
       this.jumping     = true;
-      this.velocity_y -= 30;
+      this.velocity_y -= 100;
 
     }
 
@@ -315,8 +311,8 @@ Game.Player.prototype = {
     if (Math.abs(this.velocity_y) > this.velocity_max)
     this.velocity_y = this.velocity_max * Math.sign(this.velocity_y);
 
-    this.x    += this.velocity_x;
-    this.y    += this.velocity_y;
+    this.x += this.velocity_x;
+    this.y += this.velocity_y;
 
   }
 
@@ -332,7 +328,7 @@ Game.TileSet = function(columns, tile_size) {
 };
 Game.TileSet.prototype = { constructor: Game.TileSet };
 
-Game.World = function(friction = 0.85, gravity = 1) {
+Game.World = function(friction = 0.85, gravity = 2) {
 
   this.collider  = new Game.Collider();
 
@@ -345,13 +341,13 @@ Game.World = function(friction = 0.85, gravity = 1) {
   this.tile_set  = new Game.TileSet(5, 48);
   this.player    = new Game.Player(0, 300);
 
-  this.zone_id   = "0";// The current zone.
+  this.zone_id = "1";// The current zone.
 
-  this.doors     = [];// The array of doors in the level.
-  this.door      = undefined; // If the player enters a door, the game will set this property to that door and the level will be loaded.
+  this.doors = [];// The array of doors in the level.
+  this.door = undefined; // If the player enters a door, the game will set this property to that door and the level will be loaded.
 
-  this.height    = this.tile_set.tile_size * this.rows;
-  this.width     = this.tile_set.tile_size * this.columns;
+  this.height = this.tile_set.tile_size * this.rows;
+  this.width = this.tile_set.tile_size * this.columns;
 
 };
 Game.World.prototype = {
@@ -359,9 +355,6 @@ Game.World.prototype = {
   constructor: Game.World,
 
   collideObject:function(object) {
-
-    /* I got rid of the world boundary collision. Now it's up to the tiles to keep
-    the player from falling out of the world. */
 
     var bottom, left, right, top, value;
 
@@ -391,14 +384,13 @@ Game.World.prototype = {
   setup:function(zone) {
 
     
-    this.graphical_map      = zone.graphical_map;
-    this.collision_map      = zone.collision_map;
-    this.columns            = zone.columns;
-    this.rows               = zone.rows;
-    this.doors              = new Array();
-    this.zone_id            = zone.id;
+    this.graphical_map = zone.graphical_map;
+    this.collision_map = zone.collision_map;
+    this.columns = zone.columns;
+    this.rows = zone.rows;
+    this.doors = new Array();
+    this.zone_id = zone.id;
 
-    /* Generate new doors. */
     for (let index = zone.doors.length - 1; index > -1; -- index) {
 
       let door = zone.doors[index];
@@ -406,17 +398,12 @@ Game.World.prototype = {
 
     }
 
-    /* If the player entered into a door, this.door will reference that door. Here
-    it will be used to set the player's location to the door's destination. */
+    
     if (this.door) {
-
-      /* if a destination is equal to -1, that means it won't be used. Since each zone
-      spans from 0 to its width and height, any negative number would be invalid. If
-      a door's destination is -1, the player will keep his current position for that axis. */
       if (this.door.destination_x != -1) {
 
         this.player.setCenterX   (this.door.destination_x);
-        this.player.setOldCenterX(this.door.destination_x);// It's important to reset the old position as well.
+        this.player.setOldCenterX(this.door.destination_x);
 
       }
 
@@ -427,7 +414,7 @@ Game.World.prototype = {
 
       }
 
-      this.door = undefined;// Make sure to reset this.door so we don't trigger a zone load.
+      this.door = undefined;
 
     }
 
@@ -439,9 +426,6 @@ Game.World.prototype = {
 
     this.collideObject(this.player);
 
-    /* Here we loop through all the doors in the current zone and check to see
-    if the player is colliding with any. If he does collide with one, we set the
-    world's door variable equal to that door, so we know to use it to load the next zone. */
     for(let index = this.doors.length - 1; index > -1; -- index) {
 
       let door = this.doors[index];
