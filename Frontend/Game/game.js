@@ -262,9 +262,10 @@ Object.assign(Game.Door.prototype, Game.Object.prototype);
 Game.Door.prototype.constructor = Game.Door;
 
 Game.Player = function(x, y) {
-
-  Game.MovingObject.call(this, x, y, 7, 12);
-
+  this.color1 = '#000';
+  this.color2 = '#fff';
+  Game.MovingObject.call(this, x, y, 20, 20);
+  
   this.jumping     = true;
   this.direction_x = -1;
   this.velocity_x  = 0;
@@ -279,7 +280,7 @@ Game.Player.prototype = {
     if (!this.jumping && this.velocity_y < 10) {
 
       this.jumping     = true;
-      this.velocity_y -= 13;
+      this.velocity_y -= 30;
 
     }
 
@@ -288,14 +289,14 @@ Game.Player.prototype = {
   moveLeft: function() {
 
     this.direction_x = -1;
-    this.velocity_x -= 0.55;
+    this.velocity_x -= 1;
 
   },
 
   moveRight:function(frame_set) {
 
     this.direction_x = 1;
-    this.velocity_x += 0.55;
+    this.velocity_x += 1;
 
   },
 
@@ -331,7 +332,7 @@ Game.TileSet = function(columns, tile_size) {
 };
 Game.TileSet.prototype = { constructor: Game.TileSet };
 
-Game.World = function(friction = 0.85, gravity = 2) {
+Game.World = function(friction = 0.85, gravity = 1) {
 
   this.collider  = new Game.Collider();
 
@@ -342,7 +343,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.rows      = 9;
 
   this.tile_set  = new Game.TileSet(5, 48);
-  this.player    = new Game.Player(32, 76);
+  this.player    = new Game.Player(0, 300);
 
   this.zone_id   = "0";// The current zone.
 
@@ -386,13 +387,10 @@ Game.World.prototype = {
 
   },
 
-  /* The setup function takes a zone object generated from a zoneXX.json file. It
-  sets all the world values to values of zone. If the player just passed through a
-  door, it uses the this.door variable to change the player's location to wherever
-  that door's destination goes. */
+  
   setup:function(zone) {
 
-    /* Get the new tile maps, the new zone, and reset the doors array. */
+    
     this.graphical_map      = zone.graphical_map;
     this.collision_map      = zone.collision_map;
     this.columns            = zone.columns;
