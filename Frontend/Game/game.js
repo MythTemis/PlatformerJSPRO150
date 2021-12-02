@@ -353,7 +353,7 @@ Game.World.Object.prototype = {
 };
 
 Game.World.Player = function(x, y) {
-  Game.World.Object.call(this, 100, 100, 12, 12);
+  Game.World.Object.call(this, 99, 99, 12, 12);
 
   this.health     = 3;
 
@@ -389,19 +389,21 @@ Game.World.Player.prototype = {
 
   enemyCollision:function(enemy) {
 
-    if (Math.ceil(this.getBottom) >= enemy.getTop && Math.ceil(this.getBottom) < enemy.getBottom) {
+    if ((Math.ceil(this.getBottom()) >= enemy.getTop() && Math.ceil(this.getBottom()) < enemy.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(enemy.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight()))))) {
       enemy.health -= 1;
-      console.log(enemy.health);
+      enemy.x = 2500;
     }
-    else if (Math.ceil(this.getLeft) >= enemy.getRight && Math.ceil(this.getLeft) < enemy.getLeft) {
+    else if ((Math.ceil(this.getRight()) >= Math.ceil(enemy.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft())) && (Math.ceil(this.getBottom()) > enemy.getTop())) {
       this.health -= 1;
-      this.x = enemy.getRight + 2;
       this.velocity_x = 0;
+      this.x = enemy.getLeft() - 26;
+      console.log(this.health);
     }
-    else if (Math.ceil(this.getRight) <= enemy.getLeft && Math.ceil(this.getRight) > enemy.getRight) {
+    else if ((Math.ceil(this.getLeft()) <= Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight())) && (Math.ceil(this.getBottom()) > enemy.getTop())) {
       this.health -= 1;
-      this.x = enemy.getLeft - 14;
       this.velocity_x = 0;
+      this.x = enemy.getRight() + 14;
+      console.log(this.health);
     }
 
     return enemy;
