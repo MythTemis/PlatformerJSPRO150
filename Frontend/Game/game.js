@@ -214,7 +214,9 @@ Game.MovingObject = function(x, y, width, height, velocity_max = 20) {
 };
 Game.MovingObject.prototype = {
 
-  getOldBottom : function()  { return this.y_old + this.height;       },
+  getOldBottom : function()  { 
+    return this.y_old + this.height;      
+  },
   getOldCenterX: function()  { return this.x_old + this.width  * 0.5; },
   getOldCenterY: function()  { return this.y_old + this.height * 0.5; },
   getOldLeft   : function()  { return this.x_old;                     },
@@ -248,7 +250,7 @@ Game.Door.prototype = {
     let center_y = object.getCenterY();
 
     if (center_x < this.getLeft() || center_x > this.getRight() ||
-      center_y < this.getTop()  || center_y > this.getBottom()) return false;
+      center_y < this.getTop() || center_y > this.getBottom()) return false;
 
     return true;
 
@@ -275,7 +277,7 @@ Game.Player.prototype = {
 
     if (!this.jumping && this.velocity_y < 10) {
 
-      this.jumping     = true;
+      this.jumping = true;
       this.velocity_y -= 100;
 
     }
@@ -313,6 +315,7 @@ Game.Player.prototype = {
 
     this.x += this.velocity_x;
     this.y += this.velocity_y;
+    console.log(this.x, this.y);
 
   }
 
@@ -341,9 +344,9 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set  = new Game.TileSet(5, 48);
   this.player    = new Game.Player(0, 300);
 
-  this.zone_id = "1";// The current zone.
+  this.zone_id = "0";// The current zone.
 
-  this.doors = [];// The array of doors in the level.
+  this.doors = [];
   this.door = undefined; // If the player enters a door, the game will set this property to that door and the level will be loaded.
 
   this.height = this.tile_set.tile_size * this.rows;
