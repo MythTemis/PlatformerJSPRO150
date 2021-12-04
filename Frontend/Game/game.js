@@ -300,6 +300,29 @@ Game.Player.prototype = {
 
   },
 
+  enemyCollision:function(enemy) {
+
+    if ((Math.ceil(this.getBottom()) >= enemy.getTop() && Math.ceil(this.getBottom()) < enemy.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(enemy.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight()))))) {
+      enemy.health -= 1;
+      enemy.x = 2500;
+    }
+    else if ((Math.ceil(this.getRight()) >= Math.ceil(enemy.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft())) && (Math.ceil(this.getBottom()) > enemy.getTop())) {
+      this.health -= 1;
+      this.velocity_x = 0;
+      this.x = enemy.getLeft() - 26;
+      console.log(this.health);
+    }
+    else if ((Math.ceil(this.getLeft()) <= Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight())) && (Math.ceil(this.getBottom()) > enemy.getTop())) {
+      this.health -= 1;
+      this.velocity_x = 0;
+      this.x = enemy.getRight() + 14;
+      console.log(this.health);
+    }
+
+    return enemy;
+
+  },
+
   moveLeft: function() {
 
     this.direction_x = -1;
@@ -339,6 +362,69 @@ Game.Player.prototype = {
 Object.assign(Game.Player.prototype, Game.MovingObject.prototype);
 Game.Player.prototype.constructor = Game.Player;
 
+Game.Enemy = function(x, y) {
+  Game.Object.call(this, x, y, 12, 12);
+
+  this.health     = 1;
+
+  this.color1     = "#f0f0f0";
+  this.color2     = "#404040";
+
+  this.height     = 12;
+  this.width      = 12;
+
+  this.velocity_x = 0;
+  this.velocity_y = 0;
+
+  this.timeCount = 0;
+
+};
+
+Game.Enemy.prototype = {
+
+  move:function() {
+
+    if (this.timeCount < 75) {
+      this.velocity_x = 1;
+      this.timeCount++;
+    }
+    else if (this.timeCount >= 75 && this.timeCount < 105) {
+      this.velocity_x = 0;
+      this.timeCount++;
+    }
+    else if (this.timeCount >= 105 && this.timeCount < 180) {
+      this.velocity_x = -1;
+      this.timeCount++;
+    }
+    else if (this.timeCount >= 180 && this.timeCount < 210) {
+      this.velocity_x = 0;
+      this.timeCount++;
+    }
+    else if (this.timeCount == 210) {
+      this.timeCount = 0;
+    }
+
+  },
+
+  getBottom:function() { return this.y + this.height; },
+  getLeft:function() { return this.x; },
+  getRight:function() { return this.x + this.width; },
+  getTop:function() { return this.y; },
+
+  moveLeft:function()  { this.velocity_x -= 0.5; },
+  moveRight:function() { this.velocity_x += 0.5; },
+
+  update:function() {
+
+    this.x_old = this.x;
+    this.y_old = this.y;
+    this.x += this.velocity_x;
+    this.y += this.velocity_y;
+
+  }
+
+};
+
 Game.TileSet = function(columns, tile_size) {
 
   this.columns    = columns;
@@ -359,6 +445,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
 
   this.tile_set  = new Game.TileSet(5, 48);
   this.player    = new Game.Player(0, 300);
+  this.enemy    = new Game.Enemy(112, 372);
 
   this.zone_id = "0";// The current zone.
 
@@ -442,7 +529,7 @@ Game.World.prototype = {
   update:function() {
 
     this.player.updatePosition(this.gravity, this.friction);
-
+    this.enemy.update();
     this.collideObject(this.player);
 
     for(let index = this.doors.length - 1; index > -1; -- index) {

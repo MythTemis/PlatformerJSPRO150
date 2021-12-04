@@ -22,8 +22,9 @@ const Display = function(canvas) {
     }
 
   };
-  //This function draws a square to the screen
-  this.drawPlayer = function(rectangle, color1, color2) {
+
+  this.drawObject = function(rectangle, color1, color2) {
+
     this.buffer.fillStyle = color1;
     this.buffer.fillRect(Math.round(rectangle.x), Math.round(rectangle.y), rectangle.width, rectangle.height);
     this.buffer.fillStyle = color2;
