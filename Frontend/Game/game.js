@@ -370,8 +370,8 @@ Game.Enemy = function(x, y) {
   this.color1     = "#f0f0f0";
   this.color2     = "#404040";
 
-  this.height     = 12;
-  this.width      = 12;
+  this.height     = 20;
+  this.width      = 20;
 
   this.velocity_x = 0;
   this.velocity_y = 0;
@@ -445,7 +445,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
 
   this.tile_set  = new Game.TileSet(5, 48);
   this.player    = new Game.Player(0, 300);
-  this.enemy    = new Game.Enemy(112, 372);
+  this.enemy    = new Game.Enemy(112, 365);
 
   this.zone_id = "0";// The current zone.
 
