@@ -7,8 +7,8 @@ const Display = function(canvas) {
 
   //This function draws the map to the screen
   this.drawMap = function(image, image_columns, map, map_columns, tile_size) {
-    this.buffer.fillStyle = '#808080';
-      this.buffer.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+  this.buffer.fillStyle = '#89cde3'; //This fills the background for anything that does not have an image background
+  this.buffer.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     for (let index = map.length - 1; index > -1; -- index) {
 
       let value         = map[index] - 1;
