@@ -51,9 +51,12 @@ window.addEventListener("load", function(event) {
 
         display.drawMap(assets_manager.tile_set_image, game.world.tile_set.columns, game.world.graphical_map, game.world.columns,  game.world.tile_set.tile_size);
         display.drawObject(game.world.player, game.world.player.color1, game.world.player.color2);
-        if (enemyAlive) {
-            display.drawObject(game.world.enemy, game.world.enemy.color1, game.world.enemy.color2);
+        for(let i=0; i < game.world.enemies.length; i++) {
+            if (game.world.enemies[i].enemyAlive) {
+                display.drawObject(game.world.enemies[i], game.world.enemies[i].color1, game.world.enemies[i].color2);
+            }
         }
+        
         display.render();
     };
 
@@ -69,14 +72,13 @@ window.addEventListener("load", function(event) {
             game.world.player.jump(); controller.up.active = false; 
         }
 
-        game.world.enemy.move();
-
-        game.world.enemy = game.world.player.enemyCollision(game.world.enemy);
-
-        if (game.world.enemy.health == 0) {
-            enemyAlive = false;
+        for(let i = 0; i< game.world.enemies.length; i++){
+            game.world.enemies[i].move();
+            game.world.enemies[i] = game.world.player.enemyCollision(game.world.enemies[i]);
+            if (game.world.enemies[i].health == 0) {
+                game.world.enemies[i].enemyAlive = false;
+            }
         }
-
         game.update();
 
         if(game.world.door) {

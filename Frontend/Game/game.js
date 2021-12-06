@@ -1,6 +1,6 @@
-const Game = function() {
+const Game = function(data) {
 
-  this.world = new Game.World();
+  this.world = new Game.World(data);
 
   this.update = function() {
 
@@ -362,16 +362,20 @@ Game.Player.prototype = {
 Object.assign(Game.Player.prototype, Game.MovingObject.prototype);
 Game.Player.prototype.constructor = Game.Player;
 
-Game.Enemy = function(x, y) {
-  Game.Object.call(this, x, y, 12, 12);
+Game.Enemy = function(data) {
+  
+  Game.Object.call(this, data.x, data.y, data.width, data.height);
 
-  this.health     = 1;
+  this.health = 1;
+  this.x = data.x;
+  this.y = data.y;
 
-  this.color1     = "#f0f0f0";
-  this.color2     = "#404040";
+  this.color1 = data.color1;
+  this.color2 = data.color2;
 
-  this.height     = 20;
-  this.width      = 20;
+  this.height = data.width;
+  this.width = data.height;
+  this.enemyAlive = data.enemyAlive;
 
   this.velocity_x = 0;
   this.velocity_y = 0;
@@ -433,7 +437,7 @@ Game.TileSet = function(columns, tile_size) {
 };
 Game.TileSet.prototype = { constructor: Game.TileSet };
 
-Game.World = function(friction = 0.85, gravity = 2) {
+Game.World = function(friction = 0.85, gravity = 2, data) {
 
   this.collider  = new Game.Collider();
 
@@ -445,7 +449,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
 
   this.tile_set  = new Game.TileSet(5, 48);
   this.player    = new Game.Player(0, 300);
-  this.enemy    = new Game.Enemy(112, 365);
+  this.enemies = undefined;
 
   this.zone_id = "0";// The current zone.
 
@@ -496,6 +500,7 @@ Game.World.prototype = {
     this.rows = zone.rows;
     this.doors = new Array();
     this.zone_id = zone.id;
+    this.enemies = new Array();
 
     for (let index = zone.doors.length - 1; index > -1; -- index) {
 
@@ -503,6 +508,14 @@ Game.World.prototype = {
       this.doors[index] = new Game.Door(door);
 
     }
+
+    if(zone.enemies != undefined) {
+      for(let i = 0; i < zone.enemies.length; i++) {
+        let enemy = zone.enemies[i];
+        this.enemies[i] = new Game.Enemy(enemy);
+      }
+    }
+    
 
     
     if (this.door) {
@@ -529,7 +542,9 @@ Game.World.prototype = {
   update:function() {
 
     this.player.updatePosition(this.gravity, this.friction);
-    this.enemy.update();
+    for(let i = 0; i< this.enemies.length; i++) {
+      this.enemies[i].update();
+    }
     this.collideObject(this.player);
 
     for(let index = this.doors.length - 1; index > -1; -- index) {
