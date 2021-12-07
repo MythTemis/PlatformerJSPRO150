@@ -5,7 +5,7 @@
             "destination_zone":"0", "destination_x":570, "destination_y":-1 },
 
         { "x":555, "y":365, "width":48, "height":48,
-        "destination_zone":"2", "destination_x":0, "destination_y":-1 }
+        "destination_zone":"0", "destination_x":0, "destination_y":-1 }
 
     ],
 
