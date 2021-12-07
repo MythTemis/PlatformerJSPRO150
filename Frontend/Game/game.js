@@ -307,20 +307,25 @@ Game.Player.prototype = {
   keyCollision:function(key) {
 
     if ((Math.ceil(this.getBottom()) >= key.getTop() && Math.ceil(this.getBottom()) < key.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(key.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(key.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(key.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(key.getRight()))))) {
-      this.keyCount += 1;
+      if(!key.isPickedUp) {
+        this.keyCount += 1;
+      }
+     
+      key.isPickedUp = true; 
       
+     
     }
     else if ((Math.ceil(this.getRight()) >= Math.ceil(key.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(key.getLeft())) && (Math.ceil(this.getBottom()) > key.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(key.getBottom()))) {
-      this.keyCount += 1;
-      this.velocity_x = 0;
-      this.x = key.getLeft() - 26;
-      console.log(this.health);
+      if(!key.isPickedUp) {
+        this.keyCount += 1;
+      }
+      key.isPickedUp = true;   
     }
     else if ((Math.ceil(this.getLeft()) <= Math.ceil(key.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(key.getRight())) && (Math.ceil(this.getBottom()) > key.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(key.getBottom()))) {
-      this.keyCount  += 1;
-      this.velocity_x = 0;
-      this.x = key.getRight() + 14;
-      console.log(this.health);
+      if(!key.isPickedUp) {
+        this.keyCount += 1;
+      }
+      key.isPickedUp = true;
     }
 
     return key;
@@ -442,7 +447,7 @@ Game.Enemy = function(data) {
 
   this.height = data.width;
   this.width = data.height;
-  this.enemyAlive = data.enemyAlive;
+  this.enemyAlive = true;
 
   this.velocity_x = 0;
   this.velocity_y = 0;
@@ -592,15 +597,19 @@ Game.World.prototype = {
 
     if(zone.enemies != undefined) {
       for(let i = 0; i < zone.enemies.length; i++) {
-        let enemy = zone.enemies[i];
-        this.enemies[i] = new Game.Enemy(enemy);
-      }
+        if(zone.enemies[i].enemyAlive) {
+          let enemy = zone.enemies[i];
+          this.enemies[i] = new Game.Enemy(enemy);
+        } 
+      } 
     }
 
     if(zone.keys != undefined) {
       for(let i = 0; i < zone.keys.length; i++) {
-        let key = zone.keys[i];
-        this.keys[i] = new Game.Key(key);
+        if(!zone.keys[i].isPickedUp){
+          let key = zone.keys[i];
+          this.keys[i] = new Game.Key(key);
+        }
       }
     }
     

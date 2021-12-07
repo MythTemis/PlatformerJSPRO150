@@ -76,12 +76,12 @@ window.addEventListener("load", function(event) {
             game.world.player.moveRight(); 
         }
         if (controller.up.active)  { 
-            game.world.player.jump(); controller.up.active = false; 
+            game.world.player.jump(); 
+            controller.up.active = false; 
         }
 
         for(let i = 0; i< game.world.keys.length; i++){
             game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
-            game.world.keys[i].isPickedUp = true;
         }
         for(let i = 0; i< game.world.enemies.length; i++){
             game.world.enemies[i].move();

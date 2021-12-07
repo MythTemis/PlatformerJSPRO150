@@ -31,8 +31,8 @@
             "width":20,
             "height": 20,
             "color1": "#f0f0f0",
-            "color2": "#404040",
-            "enemyAlive" :"true"
+            "color2": "#404040"
+            
         },
 
         {   
@@ -41,8 +41,8 @@
             "width":20,
             "height": 20,
             "color1": "#f0f0f0",
-            "color2": "#404040",
-            "enemyAlive" :"true"
+            "color2": "#404040"
+
         }
     ],
 
