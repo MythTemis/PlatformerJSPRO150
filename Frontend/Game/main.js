@@ -60,6 +60,7 @@ window.addEventListener("load", function(event) {
         display.render();
     };
 
+    
     var update = function() {
 
         if (controller.left.active)  { 
@@ -79,8 +80,11 @@ window.addEventListener("load", function(event) {
                 game.world.enemies[i].enemyAlive = false;
             }
         }
+        
+        var health = document.getElementById('health');
+        health.setAttribute("style", "color:#000; font-size:2.0em; position:fixed;");
         game.update();
-
+        health.innerHTML = `Health: ${game.world.player.health}`;
         if(game.world.door) {
             engine.stop();
 
