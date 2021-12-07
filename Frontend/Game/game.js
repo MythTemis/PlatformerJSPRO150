@@ -280,7 +280,8 @@ Game.Player = function(x, y) {
   this.color1 = '#000';
   this.color2 = '#fff';
   Game.MovingObject.call(this, x, y, 20, 20);
-  
+
+  this.health = 100;
   this.jumping     = true;
   this.direction_x = -1;
   this.velocity_x  = 0;
