@@ -286,6 +286,9 @@ Game.Player = function(x, y) {
   this.direction_x = -1;
   this.velocity_x  = 0;
   this.velocity_y  = 0;
+  this.isAlive = true;
+  this.keyCount = 0;
+
 
 };
 Game.Player.prototype = {
@@ -298,6 +301,29 @@ Game.Player.prototype = {
       this.velocity_y -= 100;
 
     }
+
+  },
+
+  keyCollision:function(key) {
+
+    if ((Math.ceil(this.getBottom()) >= key.getTop() && Math.ceil(this.getBottom()) < key.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(key.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(key.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(key.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(key.getRight()))))) {
+      this.keyCount += 1;
+      
+    }
+    else if ((Math.ceil(this.getRight()) >= Math.ceil(key.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(key.getLeft())) && (Math.ceil(this.getBottom()) > key.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(key.getBottom()))) {
+      this.keyCount += 1;
+      this.velocity_x = 0;
+      this.x = key.getLeft() - 26;
+      console.log(this.health);
+    }
+    else if ((Math.ceil(this.getLeft()) <= Math.ceil(key.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(key.getRight())) && (Math.ceil(this.getBottom()) > key.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(key.getBottom()))) {
+      this.keyCount  += 1;
+      this.velocity_x = 0;
+      this.x = key.getRight() + 14;
+      console.log(this.health);
+    }
+
+    return key;
 
   },
 
@@ -362,6 +388,46 @@ Game.Player.prototype = {
 };
 Object.assign(Game.Player.prototype, Game.MovingObject.prototype);
 Game.Player.prototype.constructor = Game.Player;
+
+Game.Key = function(data) {
+  Game.Object.call(this, data.x, data.y, data.width, data.height);
+
+  this.x = data.x;
+  this.y = data.y;
+  this.height = data.width;
+  this.width = data.height;
+  isPickedUp = false;
+}
+
+Game.Key.prototype = {
+  getBottom:function() { 
+    return this.y + this.height; 
+  },
+  getLeft:function() { 
+    return this.x; 
+  },
+  getRight:function() { 
+    return this.x + this.width; 
+  },
+  getTop:function() { 
+    return this.y; 
+  },
+
+  moveLeft:function()  { 
+    this.velocity_x -= 0.5; },
+  moveRight:function() { 
+    this.velocity_x += 0.5; 
+  },
+
+  update:function() {
+
+    this.x_old = this.x;
+    this.y_old = this.y;
+    this.x += this.velocity_x;
+    this.y += this.velocity_y;
+
+  }
+}
 
 Game.Enemy = function(data) {
   
@@ -465,6 +531,8 @@ Game.World = function(friction = 0.85, gravity = 2, data) {
 
   this.zone_id = "0";// The current zone.
 
+  this.keys = [];
+
   this.doors = [];
   this.door = undefined; // If the player enters a door, the game will set this property to that door and the level will be loaded.
 
@@ -511,6 +579,7 @@ Game.World.prototype = {
     this.columns = zone.columns;
     this.rows = zone.rows;
     this.doors = new Array();
+    this.keys = new Array();
     this.zone_id = zone.id;
     this.enemies = new Array();
 
@@ -525,6 +594,13 @@ Game.World.prototype = {
       for(let i = 0; i < zone.enemies.length; i++) {
         let enemy = zone.enemies[i];
         this.enemies[i] = new Game.Enemy(enemy);
+      }
+    }
+
+    if(zone.keys != undefined) {
+      for(let i = 0; i < zone.keys.length; i++) {
+        let key = zone.keys[i];
+        this.keys[i] = new Game.Key(key);
       }
     }
     

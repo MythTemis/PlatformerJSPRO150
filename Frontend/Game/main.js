@@ -56,6 +56,12 @@ window.addEventListener("load", function(event) {
                 display.drawObject(game.world.enemies[i], game.world.enemies[i].color1, game.world.enemies[i].color2);
             }
         }
+
+        for(let i = 0; i< game.world.keys.length; i++){
+            if(!game.world.keys[i].isPickedUp) {
+                display.drawObject(game.world.keys[i], '#000', '#000')
+            }
+        }
         
         display.render();
     };
@@ -73,18 +79,26 @@ window.addEventListener("load", function(event) {
             game.world.player.jump(); controller.up.active = false; 
         }
 
+        for(let i = 0; i< game.world.keys.length; i++){
+            game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
+            game.world.keys[i].isPickedUp = true;
+        }
         for(let i = 0; i< game.world.enemies.length; i++){
             game.world.enemies[i].move();
             game.world.enemies[i] = game.world.player.enemyCollision(game.world.enemies[i]);
+            
             if (game.world.enemies[i].health == 0) {
                 game.world.enemies[i].enemyAlive = false;
             }
         }
         
         var health = document.getElementById('health');
+        var keys = document.getElementById('key');
         health.setAttribute("style", "color:#000; font-size:2.0em; position:fixed; padding: 2px 60px ");
+        keys.setAttribute("style", "color:#000; font-size:2.0em; position:fixed; padding: 35px 60px ");
         game.update();
         health.innerHTML = `Health: ${game.world.player.health}`;
+        keys.innerHTML = `Keys: ${game.world.player.keyCount}`;
         if(game.world.door) {
             engine.stop();
 

@@ -6,6 +6,10 @@
 
     ],
 
+    "keys": [
+        {"x":294, "y": 364, "width":48, "height":48}
+    ],
+
     "columns":12,
     "rows"   :9,
 
