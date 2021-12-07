@@ -303,17 +303,17 @@ Game.Player.prototype = {
 
   enemyCollision:function(enemy) {
 
-    if ((Math.ceil(this.getBottom()) >= enemy.getTop() && Math.ceil(this.getBottom()) <= enemy.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(enemy.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight()))))) {
+    if ((Math.ceil(this.getBottom()) >= enemy.getTop() && Math.ceil(this.getBottom()) < enemy.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(enemy.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight()))))) {
       enemy.health -= 1;
       enemy.x = 2500;
     }
-    else if ((Math.ceil(this.getRight()) >= Math.ceil(enemy.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) == enemy.getBottom())) {
+    else if ((Math.ceil(this.getRight()) >= Math.ceil(enemy.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(enemy.getBottom()))) {
       this.health -= 1;
       this.velocity_x = 0;
       this.x = enemy.getLeft() - 26;
       console.log(this.health);
     }
-    else if ((Math.ceil(this.getLeft()) <= Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) == enemy.getBottom())) {
+    else if ((Math.ceil(this.getLeft()) <= Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(enemy.getBottom()))) {
       this.health -= 1;
       this.velocity_x = 0;
       this.x = enemy.getRight() + 14;
