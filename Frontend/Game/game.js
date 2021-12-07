@@ -411,13 +411,24 @@ Game.Enemy.prototype = {
 
   },
 
-  getBottom:function() { return this.y + this.height; },
-  getLeft:function() { return this.x; },
-  getRight:function() { return this.x + this.width; },
-  getTop:function() { return this.y; },
+  getBottom:function() { 
+    return this.y + this.height; 
+  },
+  getLeft:function() { 
+    return this.x; 
+  },
+  getRight:function() { 
+    return this.x + this.width; 
+  },
+  getTop:function() { 
+    return this.y; 
+  },
 
-  moveLeft:function()  { this.velocity_x -= 0.5; },
-  moveRight:function() { this.velocity_x += 0.5; },
+  moveLeft:function()  { 
+    this.velocity_x -= 0.5; },
+  moveRight:function() { 
+    this.velocity_x += 0.5; 
+  },
 
   update:function() {
 

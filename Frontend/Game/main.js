@@ -82,7 +82,7 @@ window.addEventListener("load", function(event) {
         }
         
         var health = document.getElementById('health');
-        health.setAttribute("style", "color:#000; font-size:2.0em; position:fixed;");
+        health.setAttribute("style", "color:#000; font-size:2.0em; position:fixed; padding: 2px 60px ");
         game.update();
         health.innerHTML = `Health: ${game.world.player.health}`;
         if(game.world.door) {
