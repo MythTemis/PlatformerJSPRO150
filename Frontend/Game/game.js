@@ -303,7 +303,7 @@ Game.Player.prototype = {
 
   enemyCollision:function(enemy) {
 
-    if ((Math.ceil(this.getBottom()) >= enemy.getTop() && Math.ceil(this.getBottom()) < enemy.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(enemy.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight()))))) {
+    if ((Math.ceil(this.getBottom()) >= enemy.getTop() && Math.ceil(this.getBottom()) <= enemy.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(enemy.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight()))))) {
       enemy.health -= 1;
       enemy.x = 2500;
     }
