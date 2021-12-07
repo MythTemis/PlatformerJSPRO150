@@ -1,0 +1,10 @@
+html{
+    background-image: url("howl.jpg");
+}
+
+canvas{
+    padding: 0;
+    margin: auto;
+    display: block;
+    outline: black solid 5px;
+}
