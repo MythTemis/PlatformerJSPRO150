@@ -31,7 +31,7 @@
             "y": 364,
             "width":20,
             "height": 20,
-            "color1": "#f0f0f0",
+            "color1": "#f04d",
             "color2": "#404040",
             "enemyAlive" :"true"
         },
