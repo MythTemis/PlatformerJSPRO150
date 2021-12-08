@@ -27,22 +27,24 @@
 
     "enemies" : [
         {   
-            "x": 159,
-            "y": 172,
+            "x": 261,
+            "y": 124,
             "width":20,
             "height": 20,
-            "color1": "#f0f0f0",
-            "color2": "#404040"
+            "color1": "#32a852",
+            "color2": "#404040",
+            "enemyAlive" :"true"
             
         },
 
         {   
-            "x": 380,
-            "y": 124,
+            "x": 361,
+            "y": 364,
             "width":20,
             "height": 20,
             "color1": "#f0f0f0",
-            "color2": "#404040"
+            "color2": "#404040",
+            "enemyAlive" :"true"
 
         }
     ],
