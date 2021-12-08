@@ -1,3 +1,7 @@
+let world0key = false;
+let world1key = false;
+let world2key = false;
+
 window.addEventListener("load", function(event) {
 
     "use strict";
@@ -59,7 +63,7 @@ window.addEventListener("load", function(event) {
 
         for(let i = 0; i< game.world.keys.length; i++){
             if(!game.world.keys[i].isPickedUp) {
-                display.drawObject(game.world.keys[i], '#000', '#000')
+                display.drawKey(game.world.keys[i].image, game.world.keys[i].x, game.world.keys[i].y)
             }
         }
         
@@ -81,7 +85,18 @@ window.addEventListener("load", function(event) {
         }
 
         for(let i = 0; i< game.world.keys.length; i++){
-            game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
+            switch(game.world.zone_id){
+                case '0' :
+                    game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
+                    world0key = game.world.keys[i].isPickedUp;
+                case '1':
+                    game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
+                    world1key = game.world.keys[i].isPickedUp;
+                case '2':
+                    game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
+                    world2key = game.world.keys[i].isPickedUp;
+            }
+            
         }
         for(let i = 0; i< game.world.enemies.length; i++){
             game.world.enemies[i].move();

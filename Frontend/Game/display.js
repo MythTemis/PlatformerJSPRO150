@@ -23,6 +23,10 @@ const Display = function(canvas) {
 
   };
 
+  this.drawKey = function(image, x, y) {
+    this.buffer.drawImage(image, x, y);
+  }
+
   this.drawObject = function(rectangle, color1, color2) {
 
     this.buffer.fillStyle = color1;

@@ -304,16 +304,14 @@ Game.Player.prototype = {
 
   },
 
-  keyCollision:function(key) {
+  keyCollision:function(key, ) {
 
     if ((Math.ceil(this.getBottom()) >= key.getTop() && Math.ceil(this.getBottom()) < key.getBottom()) && ((Math.ceil(this.getRight()) > Math.ceil(key.getLeft()) && (Math.ceil(this.getLeft()) < Math.ceil(key.getLeft()))) || ((Math.ceil(this.getLeft()) < Math.ceil(key.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(key.getRight()))))) {
       if(!key.isPickedUp) {
         this.keyCount += 1;
       }
-     
       key.isPickedUp = true; 
       
-     
     }
     else if ((Math.ceil(this.getRight()) >= Math.ceil(key.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(key.getLeft())) && (Math.ceil(this.getBottom()) > key.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(key.getBottom()))) {
       if(!key.isPickedUp) {
@@ -401,7 +399,9 @@ Game.Key = function(data) {
   this.y = data.y;
   this.height = data.width;
   this.width = data.height;
-  isPickedUp = false;
+  this.isPickedUp = false;
+  this.image = new Image();
+  this.image.src = data.image;
 }
 
 Game.Key.prototype = {

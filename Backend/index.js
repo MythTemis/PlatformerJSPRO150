@@ -4,14 +4,19 @@ const fs = require('fs');
 
 'use strict';
 
-const url = 'mongodb+srv://abecc:tortilla@cluster0.mpjye.mongodb.net/myData?retryWrites=true&w=majority';
+const url = 'mongodb+srv://abecc:tortilla@cluster0.mpjye.mongodb.net/Platformer?retryWrites=true&w=majority';
 const client = new MongoClient(url);
 
 const dbName = 'Platformer'
 const db = client.db(dbName);
-const collection = db.collection('Worlds');
+const enemyCollection = db.collection('Enemies');
+const keyCollection = db.collection('Keys');
 
 const app = express();
+
+const urlEncodedParser = express.urlencoded({
+    extended: false
+});
 
 app.use((req,res,next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -24,5 +29,7 @@ app.get('/world/:id', async (req,res) => {
     let world = JSON.parse(rawdata);
     res.json(world);
 });
+
+
 
 app.listen(3000);
