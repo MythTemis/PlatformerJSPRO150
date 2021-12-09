@@ -53,7 +53,7 @@ app.get("/game", (req,res) => {
     res.sendFile(path.join(__dirname, '/game.html'))
 });
 
-app.get("/login/:username/:password", async (req,res) => {
+app.get("/login/:username/:password", urlEncodedParser ,async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
     
@@ -72,6 +72,6 @@ app.get('/world/:id', async (req,res) => {
     res.json(world);
 });
 
+const PORT = process.env.PORT || 3000;
 
-
-app.listen(process.env.PORT || 3000);
+app.listen(PORT);
