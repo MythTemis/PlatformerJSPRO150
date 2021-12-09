@@ -2,6 +2,7 @@ const express = require('express');
 const {MongoClient, ObjectId} = require('mongodb');
 const path = require('path');
 const fs = require('fs');
+var slash   = require('express-slash');
 
 'use strict';
 
@@ -13,7 +14,7 @@ const db = client.db(dbName);
 const collection = db.collection('Users');
 
 const app = express();
-
+app.use(slash());
 app.use((req,res,next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

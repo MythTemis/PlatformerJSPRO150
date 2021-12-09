@@ -10,12 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "browser-sync": "^2.27.7",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "express-slash": "^2.0.1",
     "mongodb": "^4.1.4",
-    "nodemon": "^2.0.15",
-    "bcryptjs": "^2.4.3",
-    "express-session": "^1.17.2"
+    "nodemon": "^2.0.15"
   },
   "devDependencies": {
     "gulp": "^4.0.2"

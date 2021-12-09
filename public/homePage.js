@@ -6,7 +6,7 @@ const homeClick = evt => {
     console.log(evt.target.id);
     switch(evt.target.id){
         case'play':
-            window.location.href = 'game';
+            window.location.href = 'https://platformerjspro.herokuapp.com/game';
             break;
         case'login':
             window.location.href = 'login';
