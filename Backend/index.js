@@ -23,7 +23,6 @@ app.use((req,res,next) => {
     next();
 });
 
-
 app.get("/login/:username/:password", urlEncodedParser , async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
