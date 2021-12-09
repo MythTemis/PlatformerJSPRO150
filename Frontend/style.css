@@ -27,7 +27,7 @@ form{
 
 .btn{
     height: 45px;
-    width: 90px;
+    width: 110px;
     margin: 15px auto;
     border: 5px solid #0c3804;
     border-radius: 5px;
@@ -63,7 +63,7 @@ form{
     background-color: #237814;
 }
 
-#help{
+.help{
     font-size: 30px;
     padding: 25px 0px 75px 0px;
     text-align: center;

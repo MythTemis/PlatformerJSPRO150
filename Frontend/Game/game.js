@@ -281,7 +281,7 @@ Game.Player = function(x, y) {
   this.color2 = '#fff';
   Game.MovingObject.call(this, x, y, 20, 20);
 
-  this.health = 100;
+  this.health = 3;
   this.jumping     = true;
   this.direction_x = -1;
   this.velocity_x  = 0;
@@ -309,12 +309,18 @@ Game.Player.prototype = {
     }
     else if ((Math.ceil(this.getRight()) >= Math.ceil(enemy.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(enemy.getBottom()))) {
       this.health -= 1;
+      if(this.health == 0){
+        window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/death.html';
+      }
       this.velocity_x = 0;
       this.x = enemy.getLeft() - 26;
       console.log(this.health);
     }
     else if ((Math.ceil(this.getLeft()) <= Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(enemy.getBottom()))) {
       this.health -= 1;
+      if(this.health == 0){
+        window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/death.html';
+      }
       this.velocity_x = 0;
       this.x = enemy.getRight() + 14;
       console.log(this.health);
@@ -355,7 +361,7 @@ Game.Player.prototype = {
 
     this.x += this.velocity_x;
     this.y += this.velocity_y;
-    console.log(this.x, this.y);
+    // console.log(this.x, this.y);
 
   }
 
