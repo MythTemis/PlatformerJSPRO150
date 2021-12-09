@@ -5,7 +5,7 @@ const loginClick = async evt => {
         case'submitLogin':
             let username = document.getElementById('username');
             let password = document.getElementById('password');
-            let url = `https://platformerjspro.herokuapp.com//login/${username}/${password}`;
+            let url = `https://platformerjspro.herokuapp.com/login/${username}/${password}`;
             const response = await fetch(url);
             const data = await response.json();
             console.log(data);
