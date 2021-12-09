@@ -59,9 +59,9 @@ app.get("/login/:username/:password", urlEncodedParser , async (req,res) => {
     client.close();
     console.log(userResults[0].password);
     if(userResults[0].password == req.params.password) {
-        res.json({match:true});
+        res.redirect('/home');
     }else {
-        res.json({match:false});
+        res.redirect('/');
     }
     console.log(userResults);
     console.log(userResults[0].password);
