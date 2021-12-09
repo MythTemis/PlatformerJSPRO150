@@ -9,12 +9,6 @@ canvas{
     outline: black solid 5px;
 }
 
-form{
-    font-size: 25px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    text-align: center;
-}
-
 .box{
     height: 525px;
     width: 850px;
@@ -22,6 +16,7 @@ form{
     border: 5px solid black;
     border-radius: 25px;
     background-color: #edcb32;
+    text-align: center;
     display: block;
 }
 
@@ -41,25 +36,6 @@ form{
 }
 
 .btn:hover{
-    background-color: #237814;
-}
-
-.submit{
-    height: 55px;
-    width: 125px;
-    margin: 15px auto;
-    border: 5px solid #0c3804;
-    border-radius: 5px;
-    background-color: #15570a;
-    cursor: pointer;
-    user-select: none;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: #5dd982;
-    text-align: center;
-    font-size: 35px;
-}
-
-.submit:hover{
     background-color: #237814;
 }
 
