@@ -39,7 +39,7 @@ app.get("/home", (req,res) => {
     res.sendFile(path.join(__dirname+'/home.html'));
 });
 
-app.get("", (req,res) => {
+app.get("/", (req,res) => {
     res.sendFile(path.join(__dirname+'/login.html'));
 });
 
@@ -56,14 +56,14 @@ app.get("/game", (req,res) => {
 app.get("/login/:username/:password", async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
-    await client.close();
+    
     console.log(userResults[0].password);
     if(userResults[0].password == req.params.password) {
         res.json({match:true});
     }else {
         res.json({match:false});
     }
-    
+    await client.close();
 });
 
 app.get('/world/:id', async (req,res) => {
