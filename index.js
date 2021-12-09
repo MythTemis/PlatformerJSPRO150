@@ -55,15 +55,15 @@ app.get("/game", (req,res) => {
     res.sendFile(path.join(__dirname, '/game.html'))
 });
 
-app.get("/login/:username/:password", async (req,res) => {
+app.post("/login", urlEncodedParser, async (req,res) => {
     await client.connect();
-    const userResults = await collection.find({username: req.params.username}).toArray()
+    const userResults = await collection.find({username: req.body.username}).toArray();
     await client.close();
     console.log(userResults[0].password);
-    if(userResults[0].password == req.params.password) {
-        res.json({match:true});
+    if(userResults[0].password == req.body.password) {
+        res.redirect('/home')
     }else {
-        res.json({match:false});
+        res.redirect('/')
     }
     
 });

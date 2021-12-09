@@ -4,20 +4,12 @@ const cheat = () => {
     window.location.href = 'game';
 }
 
-const loginClick = async evt => {
+const loginClick = async (evt) => {
     switch(evt.target.id){
         case'submitLogin':
-            let username = document.getElementById('username').value;
-            let password = document.getElementById('password').value;
-            let url = `localhost:3000/login/${username}/${password}`;
-            const response = await fetch(`https://platformerjspro.herokuapp.com/login/${username}/${password}`);
-            const data = await response.json();
-            console.log(data);
-
-            if(data.match == true){
-                window.location.href = 'home';
-            }
-            console.log(data);
+            const form = document.getElementById('loginForm');
+            let url = `https://platformerjspro.herokuapp.com/login`;
+            form.submit();
             break;
     }
 }
