@@ -47,7 +47,9 @@ app.get("/death", (req,res) => {
     res.sendFile(path.join(__dirname+'/death.html'));
 });
 
-
+app.get('/game/death', (req,res) => {
+    res.redirect('/death');
+})
 
 app.get("/game", (req,res) => {
     res.sendFile(path.join(__dirname, '/game.html'))
