@@ -1,6 +1,7 @@
 let world0key = false;
 let world1key = false;
 let world2key = false;
+let world3key = false;
 
 window.addEventListener("load", function(event) {
 
@@ -95,6 +96,9 @@ window.addEventListener("load", function(event) {
                 case '2':
                     game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
                     world2key = game.world.keys[i].isPickedUp;
+                case '3':
+                    game.world.keys[i] = game.world.player.keyCollision(game.world.keys[i]);
+                    world3key = game.world.keys[i].isPickedUp;
             }
             
         }
@@ -106,6 +110,7 @@ window.addEventListener("load", function(event) {
                 game.world.enemies[i].enemyAlive = false;
             }
         }
+
         
         var health = document.getElementById('health');
         var keys = document.getElementById('key');
@@ -114,6 +119,11 @@ window.addEventListener("load", function(event) {
         game.update();
         health.innerHTML = `Health: ${game.world.player.health}`;
         keys.innerHTML = `Keys: ${game.world.player.keyCount}`;
+
+        if(game.world.player.health == 0) {
+            window.location.href = 'death.html';
+        }
+
         if(game.world.door) {
             engine.stop();
 

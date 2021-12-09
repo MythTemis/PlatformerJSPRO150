@@ -2,33 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platform Game</title>
-    
+    <title>Document</title>
 </head>
+<h1>Platformer Login</h1>
 <body>
-
-    <!-- Game Canvas -->
     <div>
-        <p id='health'></p>
-        <p id='key'></p>
-        <canvas id="gameCanvas"></canvas> 
+        Log In
+        <br>
+        <input type="text", name="username", id="username", placeholder="Username">
+        <br/>
+        <input type="password", name="password", id="password", placeholder="Password">
+        <br/>
+        <button onclick="login()">Log In</button>
+        
     </div>
+    <br/>
     
-    <!-- width="1500" height="700" style="border:4px solid #000000;" -->  
-    
-	<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-
-    <!-- Game files -->
-    <!-- <script src="app.js" ></script> -->
-    <script src="Game/controller.js" ></script>
-    <script src="Game/display.js" ></script>
-    <script src="Game/engine.js" ></script>
-    <script src="Game/game.js" ></script>
-    <script src="Game/main.js" ></script>
-    
-    <!-- <script >
-        app.init();
-    </script> -->
+    <script src="script.js"></script>
 </body>
 </html>
