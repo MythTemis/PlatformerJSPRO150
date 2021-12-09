@@ -2,7 +2,6 @@ const express = require('express');
 const {MongoClient, ObjectId} = require('mongodb');
 const path = require('path');
 const fs = require('fs');
-var slash   = require('express-slash');
 
 'use strict';
 
@@ -14,39 +13,33 @@ const db = client.db(dbName);
 const collection = db.collection('Users');
 
 const app = express();
-app.use(slash());
+
+const urlEncodedParser = express.urlencoded({
+    extended: false
+});
+app.use(express.static(path.join(__dirname, '/public')));
+app.use('/game',express.static(path.join(__dirname, '/public')));
+app.use('/game',express.static(path.join(__dirname, '/Game')));
+app.use('/game',express.static(path.join(__dirname, '/Data')));
+
 app.use((req,res,next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
 
-const urlEncodedParser = express.urlencoded({
-    extended: false
-});
-
-app.use(express.static(path.join(__dirname, '/public')));
-
-app.use('/game',express.static(path.join(__dirname, '/public')));
-app.use('/game',express.static(path.join(__dirname, '/Game')));
-app.use('/game',express.static(path.join(__dirname, '/Data')));
-
-
-
 //sendGameFiles
 
 
 ////////
 
-app.get("/", (req,res) => {
-    res.redirect('/login');
-});
+
 
 app.get("/home", (req,res) => {
     res.sendFile(path.join(__dirname+'/home.html'));
 });
 
-app.get("/login", (req,res) => {
+app.get("", (req,res) => {
     res.sendFile(path.join(__dirname+'/login.html'));
 });
 
@@ -60,17 +53,17 @@ app.get("/game", (req,res) => {
     res.sendFile(path.join(__dirname, '/game.html'))
 });
 
-app.get("/login/:username/:password", urlEncodedParser ,async (req,res) => {
+app.get("/login/:username/:password", async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
-    
+    await client.close();
     console.log(userResults[0].password);
     if(userResults[0].password == req.params.password) {
         res.json({match:true});
     }else {
         res.json({match:false});
     }
-    await client.close();
+    
 });
 
 app.get('/world/:id', async (req,res) => {
@@ -79,6 +72,6 @@ app.get('/world/:id', async (req,res) => {
     res.json(world);
 });
 
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT);
+
+app.listen(process.env.PORT || 3000);
