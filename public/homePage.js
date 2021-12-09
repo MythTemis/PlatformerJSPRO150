@@ -9,7 +9,7 @@ const homeClick = evt => {
             window.location.href = 'https://platformerjspro.herokuapp.com/game';
             break;
         case'login':
-            window.location.href = 'login';
+            window.location.href = 'https://platformerjspro.herokuapp.com';
             break;
         case'logout':
             window.location.href = 'home';
