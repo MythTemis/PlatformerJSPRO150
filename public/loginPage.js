@@ -7,7 +7,7 @@ const loginClick = async evt => {
             let password = document.getElementById('password').value;
             let url = `https://platformerjspro.herokuapp.com/login/${username}/${password}`;
             const response = await fetch(url);
-            const data = await response.json();
+            const data = await response.redirected();
             console.log(data);
 
             if(data.match == true){
