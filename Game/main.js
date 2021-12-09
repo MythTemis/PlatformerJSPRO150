@@ -19,7 +19,7 @@ window.addEventListener("load", function(event) {
         constructor: Game.AssetsManager,
 
         requestJSON: async function(id, callback) {
-            const response = await fetch(`platformerjspro.herokuapp.com/world/${id}`);
+            const response = await fetch(`https://platformerjspro.herokuapp.com/world/${id}`);
             const data = await response.json();
             console.log(data);
             callback(data);

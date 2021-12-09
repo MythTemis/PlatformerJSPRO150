@@ -6,7 +6,7 @@ const loginClick = async evt => {
             let username = document.getElementById('username').value;
             let password = document.getElementById('password').value;
             let url = `localhost:3000/login/${username}/${password}`;
-            const response = await fetch(`platformerjspro.herokuapp.com/login/${username}/${password}`);
+            const response = await fetch(`https://platformerjspro.herokuapp.com/login/${username}/${password}`);
             const data = await response.json();
             console.log(data);
 
