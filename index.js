@@ -34,9 +34,11 @@ app.use((req,res,next) => {
 ////////
 
 
-app.get("/home", (req,res) => {
+app.get("/home"||"/game/home", (req,res) => {
     res.sendFile(path.join(__dirname, '/home.html'));
 });
+
+
 
 app.get("/", (req,res) => {
     res.sendFile(path.join(__dirname, '/login.html'));
