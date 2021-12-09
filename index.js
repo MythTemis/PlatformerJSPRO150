@@ -39,7 +39,7 @@ app.use('/game',express.static(path.join(__dirname, '/Data')));
 ////////
 
 app.get("/", (req,res) => {
-    res.redirect('login');
+    res.redirect('/login');
 });
 
 app.get("/home", (req,res) => {
