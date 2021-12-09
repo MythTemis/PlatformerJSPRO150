@@ -56,7 +56,7 @@ app.get("/game", (req,res) => {
 app.get("/login/:username/:password", async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
-    client.close();
+    await client.close();
     console.log(userResults[0].password);
     if(userResults[0].password == req.params.password) {
         res.json({match:true});
