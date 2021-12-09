@@ -121,7 +121,7 @@ window.addEventListener("load", function(event) {
         keys.innerHTML = `Keys: ${game.world.player.keyCount}`;
 
         if(game.world.player.health == 0) {
-            window.location.href = 'death.html';
+            window.location.href = 'death';
         }
 
         if(game.world.door) {
@@ -157,7 +157,7 @@ window.addEventListener("load", function(event) {
 
         game.world.setup(zone);
         
-        assets_manager.requestImage("Data/WorldTiles.png", (image) => {
+        assets_manager.requestImage("WorldTiles.png", (image) => {
 
             assets_manager.tile_set_image = image;
     

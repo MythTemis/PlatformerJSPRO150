@@ -4,7 +4,7 @@ const no = document.getElementById('no');
 const deathClick = evt => {
     switch(evt.target.id){
         case'yes':
-            window.location.href = 'home.html';
+            window.location.href = 'home';
             break;
     }
 }

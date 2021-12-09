@@ -9,7 +9,7 @@
     ],
 
     "keys": [
-        {"x":294, "y": 356, "width":48, "height":28, "image":"Data/tiles/tile131.png"}
+        {"x":294, "y": 356, "width":48, "height":28, "image":"tile131.png"}
     ],
 
     "columns":12,

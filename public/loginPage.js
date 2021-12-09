@@ -11,7 +11,7 @@ const loginClick = async evt => {
             console.log(data);
 
             if(data.match == true){
-                window.location.href = 'home.html';
+                window.location.href = 'home';
             }
             console.log(data);
             break;

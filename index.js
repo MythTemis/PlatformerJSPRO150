@@ -1,5 +1,6 @@
 const express = require('express');
 const {MongoClient, ObjectId} = require('mongodb');
+const path = require('path');
 const fs = require('fs');
 
 'use strict';
@@ -16,6 +17,10 @@ const app = express();
 const urlEncodedParser = express.urlencoded({
     extended: false
 });
+app.use(express.static(path.join(__dirname, '/public')));
+app.use('/game',express.static(path.join(__dirname, '/public')));
+app.use('/game',express.static(path.join(__dirname, '/Game')));
+app.use('/game',express.static(path.join(__dirname, '/Data')));
 
 app.use((req,res,next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -23,8 +28,26 @@ app.use((req,res,next) => {
     next();
 });
 
+//sendGameFiles
+
+
+////////
+
+
+app.get("/home", (req,res) => {
+    res.sendFile(path.join(__dirname, '/home.html'));
+});
+
 app.get("/", (req,res) => {
-    res.sendFile(path.join(__dirname, '/login.html'))
+    res.sendFile(path.join(__dirname, '/login.html'));
+});
+
+app.get("/death", (req,res) => {
+    res.sendFile(path.join(__dirname, '/death.html'));
+});
+
+app.get("/game", (req,res) => {
+    res.sendFile(path.join(__dirname, '/game.html'))
 });
 app.get("/login/:username/:password", urlEncodedParser , async (req,res) => {
     await client.connect();

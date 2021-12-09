@@ -6,13 +6,13 @@ const homeClick = evt => {
     console.log(evt.target.id);
     switch(evt.target.id){
         case'play':
-            window.location.href = 'game.html';
+            window.location.href = 'game';
             break;
         case'login':
-            window.location.href = 'login.html';
+            window.location.href = 'login';
             break;
         case'logout':
-            window.location.href = 'home.html';
+            window.location.href = 'home';
             break;
     }
 }
