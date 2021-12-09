@@ -339,7 +339,7 @@ Game.Player.prototype = {
     else if ((Math.ceil(this.getRight()) >= Math.ceil(enemy.getLeft())) && (Math.ceil(this.getLeft()) < Math.ceil(enemy.getLeft())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(enemy.getBottom()))) {
       this.health -= 1;
       if(this.health == 0){
-        window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/death.html';
+        window.location.href = 'death.html';
       }
       this.velocity_x = 0;
       this.x = enemy.getLeft() - 26;
@@ -348,7 +348,7 @@ Game.Player.prototype = {
     else if ((Math.ceil(this.getLeft()) <= Math.ceil(enemy.getRight())) && (Math.ceil(this.getRight()) > Math.ceil(enemy.getRight())) && (Math.ceil(this.getBottom()) > enemy.getTop() && Math.ceil(this.getBottom()) <= Math.ceil(enemy.getBottom()))) {
       this.health -= 1;
       if(this.health == 0){
-        window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/death.html';
+        window.location.href = 'death.html';
       }
       this.velocity_x = 0;
       this.x = enemy.getRight() + 14;

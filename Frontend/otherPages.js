@@ -11,13 +11,13 @@ const homeClick = evt => {
     console.log(evt.target.id);
     switch(evt.target.id){
         case'play':
-            window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/index.html';
+            window.location.href = 'game.html';
             break;
         case'login':
-            window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/login.html';
+            window.location.href = 'login.html';
             break;
         case'create':
-            window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/create.html';
+            window.location.href = 'create.html';
             break;
         case'logout':
             break;
@@ -41,7 +41,7 @@ const loginClick = async () => {
 const deathClick = evt => {
     switch(evt.target.id){
         case'yes':
-            window.location.href = 'file:///C:/Users/Ya%20Boi/Documents/GitHub/PlatformerJSPRO150/Frontend/home.html';
+            window.location.href = 'home.html';
             break;
         case'no':
             console.log(evt.target.id);
