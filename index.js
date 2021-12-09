@@ -53,15 +53,15 @@ app.get("/game/death", (req,res) => {
 app.get("/game", (req,res) => {
     res.sendFile(path.join(__dirname, '/game.html'))
 });
-app.get("/login/:username/:password" , async (req,res) => {
+app.get("/login/:username/:password", urlEncodedParser , async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
     client.close();
     console.log(userResults[0].password);
     if(userResults[0].password == req.params.password) {
-        res.redirect('/home');
+        res.json({match:true});
     }else {
-        res.redirect('/');
+        res.json({match:false});
     }
     console.log(userResults);
     console.log(userResults[0].password);
