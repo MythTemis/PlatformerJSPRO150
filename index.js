@@ -53,7 +53,7 @@ app.get("/game/death", (req,res) => {
 app.get("/game", (req,res) => {
     res.sendFile(path.join(__dirname, '/game.html'))
 });
-app.get("/login/:username/:password", urlEncodedParser , async (req,res) => {
+app.get("/login/:username/:password" , async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
     client.close();
