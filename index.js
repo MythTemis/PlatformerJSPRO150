@@ -34,9 +34,6 @@ app.use((req,res,next) => {
 ////////
 
 
-app.get("/game/home", (req,res) => {
-    res.sendFile(path.join(__dirname, '/home.html'));
-});
 
 app.get("/home", (req,res) => {
     res.sendFile(path.join(__dirname, '/home.html'));
@@ -50,13 +47,12 @@ app.get("/death", (req,res) => {
     res.sendFile(path.join(__dirname, '/death.html'));
 });
 
-app.get("/game/death", (req,res) => {
-    res.sendFile(path.join(__dirname, '/death.html'));
-});
+
 
 app.get("/game", (req,res) => {
     res.sendFile(path.join(__dirname, '/game.html'))
 });
+
 app.get("/login/:username/:password", urlEncodedParser , async (req,res) => {
     await client.connect();
     const userResults = await collection.find({username: req.params.username}).toArray()
@@ -67,9 +63,7 @@ app.get("/login/:username/:password", urlEncodedParser , async (req,res) => {
     }else {
         res.json({match:false});
     }
-    console.log(userResults);
-    console.log(userResults[0].password);
-    console.log(req.params.password);
+    
 });
 
 app.get('/world/:id', async (req,res) => {
