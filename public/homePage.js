@@ -1,5 +1,4 @@
 const play = document.getElementById('play');
-const login = document.getElementById('login');
 const logout = document.getElementById('logout');
 
 const homeClick = evt => {
@@ -9,11 +8,10 @@ const homeClick = evt => {
             window.location.href = 'https://platformerjspro.herokuapp.com/game';
             break;
         case'logout':
-            window.location.href = 'https://platformerjspro.herokuapp.com';
+            window.location.href = '/';
             break;
     }
 }
 
 play.addEventListener('click', homeClick);
-login.addEventListener('click', homeClick);
 logout.addEventListener('click', homeClick);
