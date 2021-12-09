@@ -14,32 +14,38 @@ const collection = db.collection('Users');
 
 const app = express();
 
-const urlEncodedParser = express.urlencoded({
-    extended: false
-});
-app.use(express.static(path.join(__dirname, '/public')));
-app.use('/game',express.static(path.join(__dirname, '/public')));
-app.use('/game',express.static(path.join(__dirname, '/Game')));
-app.use('/game',express.static(path.join(__dirname, '/Data')));
-
 app.use((req,res,next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
 
+const urlEncodedParser = express.urlencoded({
+    extended: false
+});
+
+app.use(express.static(path.join(__dirname, '/public')));
+
+app.use('/game',express.static(path.join(__dirname, '/public')));
+app.use('/game',express.static(path.join(__dirname, '/Game')));
+app.use('/game',express.static(path.join(__dirname, '/Data')));
+
+
+
 //sendGameFiles
 
 
 ////////
 
-
+app.get("/", (req,res) => {
+    res.redirect('login');
+});
 
 app.get("/home", (req,res) => {
     res.sendFile(path.join(__dirname+'/home.html'));
 });
 
-app.get("/", (req,res) => {
+app.get("/login", (req,res) => {
     res.sendFile(path.join(__dirname+'/login.html'));
 });
 
